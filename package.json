@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Floateresting/pixiv-ts"
+    "url": "https://github.com/Floateresting/pixiv-typed"
   },
   "devDependencies": {
     "ts-node": "^9.1.1",
