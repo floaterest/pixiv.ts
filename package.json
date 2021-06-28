@@ -1,5 +1,5 @@
 {
-  "name": "pixiv-ts",
+  "name": "pixiv-typed",
   "version": "0.0.0",
   "description": "Module for Pixiv with typings",
   "main": "dist/index.js",
