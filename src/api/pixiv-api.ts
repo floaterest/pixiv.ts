@@ -2,7 +2,7 @@ import querystring from 'querystring';
 import https, { RequestOptions } from 'https';
 
 import { md5 } from './md5';
-import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET} from './constants';
+import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './constants';
 import { Token } from '../types/token';
 
 export class PixivApi{
@@ -28,6 +28,8 @@ export class PixivApi{
 		const datetime = new Date().toISOString().substr(0, 19) + '+00:00';
 
 		const options: RequestOptions = {
+			hostname: AUTH_HOST,
+			path: '/auth/token',
 			method: 'post',
 			headers: {
 				'X-Client-Time': datetime,
@@ -37,11 +39,12 @@ export class PixivApi{
 			},
 		};
 
+		// https://stackoverflow.com/a/67094088
 		return new Promise((resolve, reject) => {
-			const req = https.request('https://oauth.secure.pixiv.net/auth/token', options, res => {
-				const data: Buffer[] = [];
-				res.on('data', chunk => data.push(chunk));
-				res.on('end', () => resolve(JSON.parse(Buffer.concat(data).toString())));
+			const req = https.request(options, res => {
+				let data='';
+				res.on('data', chunk => data+=chunk);
+				res.on('end', () => resolve(JSON.parse(data)));
 			});
 
 			req.on('error', err => reject(err));
@@ -79,4 +82,5 @@ export class PixivApi{
 		};
 		return new PixivApi(await PixivApi.token(data));
 	}
+
 }
