@@ -4,8 +4,6 @@ import https, { RequestOptions } from 'https';
 import { md5 } from './md5';
 import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './constants';
 import { Token } from '../types/token';
-import { METHODS } from 'http';
-import { URLSearchParams } from 'url';
 
 type R = Record<string, string | number | boolean>;
 
@@ -98,9 +96,11 @@ export class PixivApi{
 	}
 
 	async get<T>(path: string, params: R): Promise<T>{
-		path += '?' + querystring.stringify(params);
+		let options = Object.assign(this.options, {
+			path: `${path}?${querystring.stringify(params)}`,
+		});
 		return new Promise(((resolve, reject) => {
-			const req = https.get(path, this.options, res => {
+			const req = https.get(path, options, res => {
 				let data = '';
 				res.on('data', chunk => data += chunk);
 				res.on('end', () => resolve(JSON.parse(data)));
@@ -117,10 +117,11 @@ export class PixivApi{
 
 	async post<T>(path: string, data: R): Promise<void>{
 		let options = Object.assign(this.options, {
+			path: path,
 			method: 'post',
 		});
 		return new Promise((resolve, reject) => {
-			const req = https.request(path, options, res => {
+			const req = https.request(options, res => {
 				let data = '';
 				res.on('data', chunk => data += chunk);
 				res.on('end', () => resolve());
