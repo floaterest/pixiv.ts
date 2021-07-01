@@ -4,6 +4,10 @@ import https, { RequestOptions } from 'https';
 import { md5 } from './md5';
 import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './constants';
 import { Token } from '../types/token';
+import { METHODS } from 'http';
+import { URLSearchParams } from 'url';
+
+type R = Record<string, string | number | boolean>;
 
 export class PixivApi{
 	token: Token;
@@ -16,7 +20,7 @@ export class PixivApi{
 	 * send POST and get token
 	 * @param data
 	 */
-	private static async token(data: Record<string, string | number | boolean>): Promise<Token>{
+	private static async token(data: R): Promise<Token>{
 		Object.assign(data, {
 			'get_secure_url': true,
 			'include_policy': true,
@@ -42,8 +46,8 @@ export class PixivApi{
 		// https://stackoverflow.com/a/67094088
 		return new Promise((resolve, reject) => {
 			const req = https.request(options, res => {
-				let data='';
-				res.on('data', chunk => data+=chunk);
+				let data = '';
+				res.on('data', chunk => data += chunk);
 				res.on('end', () => resolve(JSON.parse(data)));
 			});
 
@@ -83,4 +87,52 @@ export class PixivApi{
 		return new PixivApi(await PixivApi.token(data));
 	}
 
+	get options(): RequestOptions{
+		return {
+			hostname: HOST,
+			headers: {
+				'Accepted-Language': 'en-us',
+				'Authorization': 'Bearer ' + this.token.access_token,
+			},
+		};
+	}
+
+	async get<T>(path: string, params: R): Promise<T>{
+		path += '?' + querystring.stringify(params);
+		return new Promise(((resolve, reject) => {
+			const req = https.get(path, this.options, res => {
+				let data = '';
+				res.on('data', chunk => data += chunk);
+				res.on('end', () => resolve(JSON.parse(data)));
+			});
+
+			req.on('error', err => reject(err));
+			req.on('timeout', () => {
+				req.destroy();
+				reject(new Error('Request time out'));
+			});
+			req.end();
+		}));
+	}
+
+	async post<T>(path: string, data: R): Promise<void>{
+		let options = Object.assign(this.options, {
+			method: 'post',
+		});
+		return new Promise((resolve, reject) => {
+			const req = https.request(path, options, res => {
+				let data = '';
+				res.on('data', chunk => data += chunk);
+				res.on('end', () => resolve());
+			});
+
+			req.on('error', err => reject(err));
+			req.on('timeout', () => {
+				req.destroy();
+				reject(new Error('Request time out'));
+			});
+			req.write(querystring.stringify(data));
+			req.end();
+		});
+	}
 }
