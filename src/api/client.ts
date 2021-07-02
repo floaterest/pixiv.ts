@@ -13,7 +13,7 @@ export class HttpClient{
 			path: `${path}?${querystring.stringify(params)}`,
 		});
 		return new Promise(((resolve, reject) => {
-			const req = https.get(path, options, res => {
+			const req = https.get(options, res => {
 				let data = '';
 				res.on('data', chunk => data += chunk);
 				res.on('end', () => resolve(JSON.parse(data)));
