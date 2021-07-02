@@ -6,6 +6,8 @@ import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './consta
 import { Token } from '../types/token';
 import { HttpClient, KeyValuePair } from './client';
 
+import { UserDetail } from '../types/user';
+
 export class PixivApi extends HttpClient{
 	token: Token;
 
@@ -23,6 +25,8 @@ export class PixivApi extends HttpClient{
 			},
 		};
 	}
+
+	//#region OAuth
 
 	/**
 	 * send POST and get token
@@ -94,4 +98,18 @@ export class PixivApi extends HttpClient{
 		};
 		return new PixivApi(await PixivApi.token(data));
 	}
+
+	//#endregion OAuth
+
+	//#region get
+
+	//#region user
+	async getUserDetail(id: number = this.token.user.id): Promise<UserDetail>{
+		return await this.get<UserDetail>('/v1/user/detail', {
+			'user_id': id,
+		});
+	}
+
+	//#endregion user
+	//#endregion get
 }
