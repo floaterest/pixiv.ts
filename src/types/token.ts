@@ -1,6 +1,6 @@
 import { PixivObject } from './pixiv-object';
 
-export declare type Token = PixivObject & {
+export type Token = PixivObject & {
 	access_token: string;
 	expires_in: number;
 	token_type: string;

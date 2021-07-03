@@ -1,6 +1,6 @@
 import { PixivObject } from './pixiv-object';
 
-export declare type User = PixivObject & {
+export type User = PixivObject & {
 	id: number
 	name: string
 	account: string
@@ -8,10 +8,10 @@ export declare type User = PixivObject & {
 		medium: string
 	}
 	is_followed: boolean
-	comment: string
+	comment?: string
 }
 
-export declare type UserDetail = PixivObject & {
+export type UserDetail = PixivObject & {
 	user: User
 	profile: {
 		webpage: string
