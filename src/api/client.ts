@@ -8,10 +8,10 @@ export class HttpClient{
 		return {};
 	}
 
-	async get<T>(path: string, params: KeyValuePair): Promise<T>{
-		let options = Object.assign(this.options, {
-			path: `${path}?${querystring.stringify(params)}`,
-		});
+	async get<T>(path: string, params: KeyValuePair | null = null): Promise<T>{
+		if(params != null) path += `?${querystring.stringify(params!)}`;
+
+		let options = Object.assign(this.options, { path: path });
 		return new Promise(((resolve, reject) => {
 			const req = https.get(options, res => {
 				let data = '';
