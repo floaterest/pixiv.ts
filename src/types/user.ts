@@ -1,6 +1,7 @@
-import { PixivObject } from './pixiv-object';
+import { PixivPage } from './pixiv-object';
+import { Illustration } from './illustration';
 
-export type User = PixivObject & {
+export interface User{
 	id: number
 	name: string
 	account: string
@@ -11,7 +12,7 @@ export type User = PixivObject & {
 	comment?: string
 }
 
-export type UserDetail = PixivObject & {
+export interface UserDetail{
 	user: User
 	profile: {
 		webpage: string
@@ -63,4 +64,8 @@ export type UserDetail = PixivObject & {
 		comment: string
 		workspace_image_url: string
 	}
+}
+
+export interface IllustsPage extends PixivPage{
+	illusts: Illustration[]
 }
