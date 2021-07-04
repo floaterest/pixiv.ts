@@ -4,9 +4,11 @@ import https, { RequestOptions } from 'https';
 import { md5 } from './md5';
 import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './constants';
 import { Token } from '../types/token';
+import { PixivPage } from '../types/pixiv-object';
 import { HttpClient, KeyValuePair } from './client';
 
 import { UserDetail } from '../types/user';
+import { URL } from 'url';
 
 export class PixivApi extends HttpClient{
 	token: Token;
@@ -24,6 +26,15 @@ export class PixivApi extends HttpClient{
 				'Authorization': 'Bearer ' + this.token.access_token,
 			},
 		};
+	}
+
+	private async getPage(path: string, params: KeyValuePair, callback: (page: PixivPage) => boolean){
+		let page: PixivPage = await this.get<PixivPage>(path, params);
+		let url: URL;
+		while(callback(page) && page.next_url){
+			url = new URL(page.next_url);
+			page = await this.get<PixivPage>(url.pathname + url.search);
+		}
 	}
 
 	//#region OAuth
@@ -108,6 +119,12 @@ export class PixivApi extends HttpClient{
 		return await this.get<UserDetail>('/v1/user/detail', {
 			'user_id': id,
 		});
+	}
+
+	async getUserIllusts(id: number = this.token.user.id, callback: (page:any) => boolean){
+		await this.getPage('/v1/user/illusts',{
+			'user_id': id,
+		}, callback);
 	}
 
 	//#endregion user
