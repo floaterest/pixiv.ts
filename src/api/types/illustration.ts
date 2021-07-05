@@ -13,13 +13,15 @@ export interface Illustration extends Artwork{
 	sanity_level: number // kinda represents how NSFW the illustration is?
 	series: null // never saw a non-null value
 	meta_single_page: {
-		original_image_url: string
+		original_image_url?: string
 	}
 	meta_pages: {
-		square_medium: string
-		medium: string
-		large: string
-		original: string
+		image_urls: {
+			square_medium: string
+			medium: string
+			large: string
+			original: string
+		}
 	}[]
 	total_comments?: number // DNE when getting user bookmarks
 }
