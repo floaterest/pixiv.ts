@@ -1,14 +1,14 @@
+import { URL } from 'url';
 import querystring from 'querystring';
 import https, { RequestOptions } from 'https';
 
 import { md5 } from './md5';
 import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './constants';
+import { HttpClient, KeyValuePair } from './client';
 import { Token } from './types/token';
 import { PixivPage } from './types/pixiv-object';
-import { HttpClient, KeyValuePair } from './client';
-
 import { UserDetail, IllustsPage } from './types/user';
-import { URL } from 'url';
+import { Illustration } from './types/illustration';
 
 export class PixivApi extends HttpClient{
 	token: Token;
@@ -128,5 +128,15 @@ export class PixivApi extends HttpClient{
 	}
 
 	//#endregion user
+
+	//#region illustration
+
+	async getIllustDetail(id: number): Promise<Illustration>{
+		return await this.get<Illustration>('/v1/illust/detail', {
+			'illust_id': id,
+		});
+	}
+
+	//#endregion illustration
 	//#endregion get
 }
