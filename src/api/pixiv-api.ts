@@ -7,7 +7,7 @@ import { Token } from '../types/token';
 import { PixivPage } from '../types/pixiv-object';
 import { HttpClient, KeyValuePair } from './client';
 
-import { UserDetail } from '../types/user';
+import { UserDetail, IllustsPage } from '../types/user';
 import { URL } from 'url';
 
 export class PixivApi extends HttpClient{
@@ -28,12 +28,12 @@ export class PixivApi extends HttpClient{
 		};
 	}
 
-	private async getPage(path: string, params: KeyValuePair, callback: (page: PixivPage) => boolean){
-		let page: PixivPage = await this.get<PixivPage>(path, params);
+	private async getPage<T extends PixivPage>(path: string, params: KeyValuePair, callback: (page: T) => boolean){
+		let page = await this.get<T>(path, params);
 		let url: URL;
 		while(callback(page) && page.next_url){
 			url = new URL(page.next_url);
-			page = await this.get<PixivPage>(url.pathname + url.search);
+			page = await this.get<T>(url.pathname + url.search);
 		}
 	}
 
@@ -121,8 +121,8 @@ export class PixivApi extends HttpClient{
 		});
 	}
 
-	async getUserIllusts(id: number = this.token.user.id, callback: (page:any) => boolean){
-		await this.getPage('/v1/user/illusts',{
+	async getUserIllusts(id: number = this.token.user.id, callback: (page: IllustsPage) => boolean){
+		await this.getPage('/v1/user/illusts', {
 			'user_id': id,
 		}, callback);
 	}
