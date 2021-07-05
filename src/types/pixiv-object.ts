@@ -6,14 +6,11 @@ enum Restrict{
 	Private,
 }
 
-
-export type PixivObject = {}
-
-export type PixivPage = {
+export interface PixivPage{
 	next_url: string
 }
 
-export type Artwork = PixivObject & {
+export interface Artwork{
 	id: number
 	title: number
 	caption: string
@@ -22,7 +19,7 @@ export type Artwork = PixivObject & {
 	create_date: string // iso
 	tags: {
 		name: string
-		translated_name: string
+		translated_name: string | null
 	}
 	user: User
 	total_view: number
