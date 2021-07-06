@@ -121,16 +121,16 @@ export class PixivApi extends HttpClient{
 		});
 	}
 
-	async getUserIllusts(id: number = this.token.user.id, callback: (page: IllustsPage) => boolean){
+	async getUserIllusts(callback: (page: IllustsPage) => boolean, id: number = this.token.user.id): Promise<void>{
 		await this.getPage<IllustsPage>('/v1/user/illusts', {
 			'user_id': id,
 		}, callback);
 	}
 
 	async getUserBookmarks(
-		id: number = this.token.user.id,
 		callback: (page: IllustsPage) => boolean,
-		restrict: 'public' | 'private',
+		id: number = this.token.user.id,
+		restrict: 'public' | 'private' = 'public',
 	){
 		await this.getPage<IllustsPage>('/v1/user/bookmarks/illust', {
 			'user_id': id,
