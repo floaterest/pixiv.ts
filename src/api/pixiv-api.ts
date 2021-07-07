@@ -37,7 +37,7 @@ export class PixivApi extends HttpClient{
 		}
 	}
 
-	//#region OAuth
+	//#region oauth
 
 	/**
 	 * send POST and get token
@@ -90,12 +90,14 @@ export class PixivApi extends HttpClient{
 	 * @param password
 	 */
 	static async login(email: string, password: string): Promise<PixivApi>{
-		let data = {
-			'grant_type': 'password',
-			'username': email,
-			'password': password,
-		};
-		return new PixivApi(await PixivApi.token(data));
+		// Pixiv-sama please
+		// let data = {
+		// 	'grant_type': 'password',
+		// 	'username': email,
+		// 	'password': password,
+		// };
+		// return new PixivApi(await PixivApi.token(data));
+		throw Error('not implemented');
 	}
 
 	/**
@@ -110,7 +112,7 @@ export class PixivApi extends HttpClient{
 		return new PixivApi(await PixivApi.token(data));
 	}
 
-	//#endregion OAuth
+	//#endregion oauth
 
 	//#region get
 
