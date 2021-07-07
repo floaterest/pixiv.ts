@@ -1,6 +1,1 @@
-function test(){
-	console.log('please work');
-}
-
-module.exports = { test };
-
+export { PixivApi } from './api/pixiv-api';
