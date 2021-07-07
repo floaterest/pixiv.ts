@@ -4,11 +4,11 @@ import querystring from 'querystring';
 export type KeyValuePair = Record<string, string | number | boolean>;
 
 export class HttpClient{
-	get options(): RequestOptions{
+	protected get options(): RequestOptions{
 		return {};
 	}
 
-	async get<T>(path: string, params: KeyValuePair | null = null): Promise<T>{
+	protected async get<T>(path: string, params: KeyValuePair | null = null): Promise<T>{
 		if(params != null) path += `?${querystring.stringify(params!)}`;
 
 		let options = Object.assign(this.options, { path: path });
@@ -28,7 +28,7 @@ export class HttpClient{
 		}));
 	}
 
-	async post<T>(path: string, data: KeyValuePair): Promise<void>{
+	protected async post<T>(path: string, data: KeyValuePair): Promise<void>{
 		let options = Object.assign(this.options, {
 			path: path,
 			method: 'post',
