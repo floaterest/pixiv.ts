@@ -3,7 +3,7 @@ A typed module for [Pixiv](https://www.pixiv.net/en/) written in TypeScript
 
 ## Features
 ### PixivApi
-> Currently, `PixivApi.login` is disabled, please use `PixivApi.refresh()' instead
+> Currently, `PixivApi.login` is disabled, please use `PixivApi.refresh()' instead (for more information, see ![#1](../../issues/1))
 
 ```ts
 import { PixivApi } from 'pixiv-typed';
