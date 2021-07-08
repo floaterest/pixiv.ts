@@ -1,9 +1,28 @@
-# pixiv-typed
-A typed module for [Pixiv](https://www.pixiv.net/en/) written in TypeScript
+# pixiv-typed <!-- omit in toc -->
+An npm module for [Pixiv](https://www.pixiv.net/en/) written in TypeScript
+# Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+	- [PixivApi](#pixivapi)
+- [Todo](#todo)
+- [Contribution](#contribution)
 
-## Features
-### PixivApi
-> Currently, `PixivApi.login` is disabled, please use `PixivApi.refresh()' instead (for more information, see ![#1](../../issues/1))
+# Installation
+[Back to top](#table-of-contents)
+
+To install, use
+```sh
+npm i pixiv-typed
+```
+To uninstall, use
+```sh
+npm r pixiv-typed
+```
+
+# Usage
+## PixivApi
+[Back to top](#table-of-contents)
+> Currently, `PixivApi.login` is disabled, please use `PixivApi.refresh()` instead (for more information, see [#1](../../issues/1))
 
 ```ts
 import { PixivApi } from 'pixiv-typed';
@@ -16,7 +35,7 @@ PixivApi.refresh(refreshToken).then(api => {
 
 	// api.getUserDetail() for yourself
 	api.getUserDetail(pixivStaff).then(detail => {
-		// do stuff with 'detail' see wiki for more info
+		// do stuff with 'detail' see doc for more info
 	});
 
 	api.getUserIllusts(page => {
@@ -42,5 +61,18 @@ PixivApi.refresh(refreshToken).then(api => {
 });
 
 ```
-## TODO
-- Pixiv database
+
+*For more information, please refer to the [documentation](/doc/api.md)*
+
+# Todo
+[Back to top](#table-of-contents)
+- Finish PixivApi
+- Add PixivDatabase
+
+# Contribution
+[Back to top](#table-of-contents)
+1. Fork it [here](../../fork)
+2. Create your feature branch<br>```git checkout -b feature/foobar```
+3. Commit your changes<br>```git commit -am 'add foobar'```
+4. Push to the branch<br>```git push origin feature/foobar```
+5. Create a new Pull Request
