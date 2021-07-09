@@ -11,7 +11,7 @@ An npm module for [Pixiv](https://www.pixiv.net/en/) written in TypeScript
 - [Contribution](#contribution)
 
 # Installation
-[Back to top](#pixiv-typed)
+[Back to top](#table-of-contents)
 
 To install, use
 ```sh
