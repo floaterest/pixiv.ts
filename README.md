@@ -1,6 +1,5 @@
 # pixiv-typed <!-- omit in toc -->
 An npm module for [Pixiv](https://www.pixiv.net/en/) written in TypeScript
-# Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
 	- [PixivApi](#pixivapi)
@@ -8,7 +7,7 @@ An npm module for [Pixiv](https://www.pixiv.net/en/) written in TypeScript
 - [Contribution](#contribution)
 
 # Installation
-[Back to top](#table-of-contents)
+[Back to top](#pixiv-typed)
 
 To install, use
 ```sh
@@ -21,8 +20,10 @@ npm r pixiv-typed
 
 # Usage
 ## PixivApi
-[Back to top](#table-of-contents)
-> Currently, `PixivApi.login` is disabled, please use `PixivApi.refresh()` instead (for more information, see [#1](../../issues/1))
+[Back to top](#pixiv-typed)
+
+<details>
+<summary><b>Code Example</b></summary>
 
 ```ts
 import { PixivApi } from 'pixiv-typed';
@@ -61,16 +62,17 @@ PixivApi.refresh(refreshToken).then(api => {
 });
 
 ```
+</details>
 
 *For more information, please refer to the [documentation](/doc/api.md)*
 
 # Todo
-[Back to top](#table-of-contents)
+[Back to top](#pixiv-typed)
 - Finish PixivApi
 - Add PixivDatabase
 
 # Contribution
-[Back to top](#table-of-contents)
+[Back to top](#pixiv-typed)
 1. Fork it [here](../../fork)
 2. Create your feature branch<br>```git checkout -b feature/foobar```
 3. Commit your changes<br>```git commit -am 'add foobar'```
