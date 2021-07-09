@@ -1,5 +1,9 @@
 # pixiv-typed <!-- omit in toc -->
 An npm module for [Pixiv](https://www.pixiv.net/en/) written in TypeScript
+
+<!-- omit in toc -->
+
+# Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
 	- [PixivApi](#pixivapi)
@@ -20,8 +24,7 @@ npm r pixiv-typed
 
 # Usage
 ## PixivApi
-[Back to top](#pixiv-typed)
-
+[Back to top](#table-of-contents)
 <details>
 <summary><b>Code Example</b></summary>
 
@@ -67,12 +70,12 @@ PixivApi.refresh(refreshToken).then(api => {
 *For more information, please refer to the [documentation](/doc/api.md)*
 
 # Todo
-[Back to top](#pixiv-typed)
+[Back to top](#table-of-contents)
 - Finish PixivApi
 - Add PixivDatabase
 
 # Contribution
-[Back to top](#pixiv-typed)
+[Back to top](#table-of-contents)
 1. Fork it [here](../../fork)
 2. Create your feature branch<br>```git checkout -b feature/foobar```
 3. Commit your changes<br>```git commit -am 'add foobar'```
