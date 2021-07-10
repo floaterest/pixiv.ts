@@ -1,6 +1,6 @@
 # PixivApi <!-- omit in toc -->
 Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
-- for source code, see [here](../src/api/pixiv-api.ts)
+- for Source code, see [here](../src/api/pixiv-api.ts)
 - for code usages, see [readme](../README.md)
 
 <!-- omit in toc -->
@@ -33,22 +33,23 @@ Get/Refresh the access token and create a `PixivApi` instance
 ```ts
 static async login(email: string, password: string): Promise<PixivApi>
 ```
-[source code](../src/api/pixiv-api.ts#L92)
-- Parameters
-    - `email` user email or username
-    - `password` user password
-- Returns
-    - a promised `PixivApi` instance that can be used to perform all other HTTP requests
-- Note
-    - Pixiv will send an email saying new login, so use this only to get the refresh token
+- [Source code](../../331f70d9c2e56964d89ccbbb267753c85c19a019/src/api/pixiv-api.ts#L92)
+    - Parameters
+        - `email` user email or username
+        - `password` user password
+    - Returns
+        - a promised `PixivApi` instance that can be used to perform all other HTTP requests
+    - Note
+        - Pixiv will send an email saying new login, so use this only to get the refresh token
 
 ## Refresh
 ```ts
 static async refresh(refreshToken: string): Promise<PixivApi>
 ```
-- Parameters
-    - `refreshToken` user's refresh token (do not share it because it never expires!)
-- Returns
-    - a promised `PixivApi` instance that can be used to perform all other HTTP requests
-- Note
-    - <abbr title="so (ab)use this, not login">Pixiv won't send email if user logs in with refresh token</abbr>
+- [Source code](../../331f70d9c2e56964d89ccbbb267753c85c19a019/src/api/pixiv-api.ts#L107)
+    - Parameters
+        - `refreshToken` user's refresh token (do not share it because it never expires!)
+    - Returns
+        - a promised `PixivApi` instance that can be used to perform all other HTTP requests
+    - Note
+        - <abbr title="so (ab)use this, not login">Pixiv won't send email if user logs in with refresh token</abbr>
