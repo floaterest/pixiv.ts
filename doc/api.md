@@ -52,4 +52,4 @@ static async refresh(refreshToken: string): Promise<PixivApi>
     - Returns
         - a promised `PixivApi` instance that can be used to perform all other HTTP requests
     - Note
-        - <abbr title="so (ab)use this, not login">Pixiv won't send email if user logs in with refresh token</abbr>
+        - Pixiv won't send email if user logs in with refresh token
