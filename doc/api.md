@@ -9,6 +9,8 @@ Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
 - [OAuth](#oauth)
     - [Login](#login)
     - [Refresh](#refresh)
+- [User](#user)
+    - [User Detail](#user-detail)
 
 # Getting Started
 [Back to top](#table-of-contents)
@@ -53,3 +55,17 @@ static async refresh(refreshToken: string): Promise<PixivApi>
         - a promised `PixivApi` instance that can be used to perform all other HTTP requests
     - Note
         - Pixiv won't send email if user logs in with refresh token
+
+# User
+Perform HTTP requests to `/v1/user/*`
+
+## User Detail
+```ts
+async getUserDetail(id: number = this.token.user.id): Promise<UserDetail>
+```
+
+- [Source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L120)
+    - Parameters
+        - `id` user's id (or user id from the token by default)
+    - Returns
+        - a promised `UserDetail` object, see [UserDetail interface](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/types/user.ts#L15) for more information
