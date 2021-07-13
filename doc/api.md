@@ -11,6 +11,7 @@ Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
     - [Refresh](#refresh)
 - [User](#user)
     - [User Detail](#user-detail)
+    - [User Illustrations](#user-illustrations)
 
 # Getting Started
 [Back to top](#table-of-contents)
@@ -63,9 +64,24 @@ Perform HTTP requests to `/v1/user/*`
 ```ts
 async getUserDetail(id: number = this.token.user.id): Promise<UserDetail>
 ```
-
 - [Source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L120)
     - Parameters
         - `id` user's id (or user id from the token by default)
     - Returns
         - a promised `UserDetail` object, see [UserDetail interface](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/types/user.ts#L15) for more information
+
+## User Illustrations
+```ts
+async getUserIllusts(callback: (page: IllustsPage) => boolean, id: number = this.token.user.id)
+```
+- [Source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L126)
+    - Parameters
+        - `callback` a function that processes the result from the HTTP request
+        - `id` user's id (or user id from the token by default)
+    - Returns
+        - nothing because the result is processed in `callback`
+    - Note
+        - if `callback` returns `true`, the API will continue requesting the next page
+        - see [IllustsPage interface](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/types/user.ts#L69) for more information (but there's almost nothing there, so see [Illustration interface](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/types/illustration.ts#L3) for more details)
+
+
