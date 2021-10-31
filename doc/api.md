@@ -1,6 +1,6 @@
 # PixivApi <!-- omit in toc -->
 Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
-- for Source code, see [here](../src/api/pixiv-api.ts)
+- for source code, see [here](../src/api/pixiv-api.ts)
 - for code usages, see [readme](../README.md)
 
 <!-- omit in toc -->
