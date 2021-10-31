@@ -13,6 +13,8 @@ Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
     - [User Detail](#user-detail)
     - [User Illustrations](#user-illustrations)
     - [User Bookmarks](#user-bookmarks)
+- [Illustration](#illustration)
+    - [Illustration Detail](#illustration-detail)
 
 # Getting Started
 [Back to top](#table-of-contents)
@@ -95,3 +97,16 @@ async getUserBookmarks(callback, id: number = this.token.user.id, restrict: 'pub
         - `restrict` public or private (don't request other people's private bookmarks)
     - Returns
         - nothing because the result is processed in `callback`
+
+# Illustration
+Perform HTTP requests to `/v1/illust/*`
+
+## Illustration Detail
+```ts
+async getIllustDetail(id: number): Promise<Illustration>
+```
+- [Source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L147)
+    - Parameters
+        - `id` illustration id
+    - Returns
+        - a promised `Illustration` object, see [Illustration interface](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/types/illustration.ts#L3) and [Artwork interface](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/types/pixiv-object.ts#L13) for more information
