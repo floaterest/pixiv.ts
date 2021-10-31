@@ -71,8 +71,18 @@ PixivApi.refresh(refreshToken).then(api => {
 
 # Todo
 [Back to top](#table-of-contents)
-- Finish PixivApi
-- Add PixivDatabase
+- PixivApi
+	- user
+		- add other artwork type to getUserBookmarks
+		- add getUserFollowings
+	- illust
+		- add add/delete bookmark
+	- general
+		- add "too many requests" handler support
+		- add file downloader and filename formatter
+- PixivDatabase
+	- add database structure
+	- add read/write support
 
 # Contribution
 [Back to top](#table-of-contents)
