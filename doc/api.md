@@ -67,7 +67,7 @@ Perform HTTP requests to `/v1/user/*`
 ```ts
 async getUserDetail(id: number = this.token.user.id): Promise<UserDetail>
 ```
-- [Source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L120)
+- GET `/v1/user/detail` ([source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L120))
     - Parameters
         - `id` user's id (or user id from the token by default)
     - Returns
@@ -77,7 +77,7 @@ async getUserDetail(id: number = this.token.user.id): Promise<UserDetail>
 ```ts
 async getUserIllusts(callback: (page: IllustsPage) => boolean, id: number = this.token.user.id)
 ```
-- [Source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L126)
+- GET `/v1/user/illusts` ([source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L126))
     - Parameters
         - `callback` a function that processes the result from the HTTP request
         - `id` user's id (or user id from the token by default)
@@ -91,7 +91,7 @@ async getUserIllusts(callback: (page: IllustsPage) => boolean, id: number = this
 ```ts
 async getUserBookmarks(callback, id: number = this.token.user.id, restrict: 'public' | 'private' = 'public')
 ```
-- [Source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L132)
+- GET `/v1/user/bookmarks/illust` ([source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L132))
     - Parameters
         - same as  [User Illustrations](#user-illustrations)
         - `restrict` public or private (don't request other people's private bookmarks)
@@ -105,7 +105,7 @@ Perform HTTP requests to `/v1/illust/*`
 ```ts
 async getIllustDetail(id: number): Promise<Illustration>
 ```
-- [Source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L147)
+- GET `/v1/illust/detail` ([source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L147))
     - Parameters
         - `id` illustration id
     - Returns
