@@ -39,10 +39,6 @@ export class PixivApi extends HttpClient{
 
 	//#region oauth
 
-	/**
-	 * send POST and get token
-	 * @param data
-	 */
 	private static async token(data: KeyValuePair): Promise<Token>{
 		Object.assign(data, {
 			'get_secure_url': true,
@@ -84,11 +80,6 @@ export class PixivApi extends HttpClient{
 		});
 	}
 
-	/**
-	 * create client with email/username and password
-	 * @param email
-	 * @param password
-	 */
 	static async login(email: string, password: string): Promise<PixivApi>{
 		// Pixiv-sama please
 		// let data = {
@@ -100,10 +91,6 @@ export class PixivApi extends HttpClient{
 		throw Error('not implemented');
 	}
 
-	/**
-	 * create client with refresh token
-	 * @param refreshToken
-	 */
 	static async refresh(refreshToken: string): Promise<PixivApi>{
 		let data = {
 			'grant_type': 'refresh_token',
@@ -111,12 +98,12 @@ export class PixivApi extends HttpClient{
 		};
 		return new PixivApi(await PixivApi.token(data));
 	}
-
 	//#endregion oauth
 
 	//#region get
 
 	//#region user
+
 	async getUserDetail(id: number = this.token.user.id): Promise<UserDetail>{
 		return await this.get<UserDetail>('/v1/user/detail', {
 			'user_id': id,
@@ -139,7 +126,6 @@ export class PixivApi extends HttpClient{
 			'restrict': restrict,
 		}, callback);
 	}
-
 	//#endregion user
 
 	//#region illustration
@@ -149,7 +135,6 @@ export class PixivApi extends HttpClient{
 			'illust_id': id,
 		});
 	}
-
 	//#endregion illustration
 	//#endregion get
 }
