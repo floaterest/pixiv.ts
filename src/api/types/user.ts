@@ -69,3 +69,14 @@ export interface UserDetail{
 export interface IllustsPage extends PixivPage{
 	illusts: Illustration[]
 }
+
+interface UserPreview{
+	user: User
+	illusts: Illustration[]
+	novels: object[]
+	is_muted: boolean
+}
+
+export interface UsersPage extends PixivPage{
+	user_previews: UserPreview[]
+}
