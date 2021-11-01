@@ -75,6 +75,7 @@ PixivApi.refresh(refreshToken).then(api => {
 	- user
 		- add other artwork type to getUserBookmarks
 		- add getUserFollowings
+		- add novels in UserPreview interface
 	- illust
 		- add add/delete bookmark
 	- general
