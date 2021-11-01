@@ -7,7 +7,7 @@ enum Restrict{
 }
 
 export interface PixivPage{
-	next_url: string
+	next_url: string | null
 }
 
 export interface Artwork{
