@@ -6,9 +6,11 @@ import { md5 } from './md5';
 import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './constants';
 import { HttpClient, KeyValuePair } from './client';
 import { Token } from './types/token';
-import { PixivPage } from './types/pixiv-object';
+import { PixivPage, PageCallback } from './types/pixiv-object';
 import { UserDetail, IllustsPage, UsersPage } from './types/user';
 import { Illustration } from './types/illustration';
+
+type Restrict = 'public' | 'private';
 
 export class PixivApi extends HttpClient{
 	token: Token;
@@ -28,7 +30,11 @@ export class PixivApi extends HttpClient{
 		};
 	}
 
-	private async getPage<T extends PixivPage>(path: string, params: KeyValuePair, callback: (page: T) => boolean){
+	get uid(): number{
+		return this.token.user.id;
+	}
+
+	private async getPage<T extends PixivPage>(path: string, params: KeyValuePair, callback: PageCallback<T>){
 		let page = await this.get<T>(path, params);
 		let url: URL;
 		while(callback(page) && page.next_url){
@@ -106,34 +112,26 @@ export class PixivApi extends HttpClient{
 
 	//#region user
 
-	async getUserDetail(id: number = this.token.user.id): Promise<UserDetail>{
+	async getUserDetail(id: number = this.uid): Promise<UserDetail>{
 		return await this.get<UserDetail>('/v1/user/detail', {
 			'user_id': id,
 		});
 	}
 
-	async getUserIllusts(callback: (page: IllustsPage) => boolean, id: number = this.token.user.id): Promise<void>{
+	async getUserIllusts(callback: PageCallback<IllustsPage>, id: number = this.uid): Promise<void>{
 		await this.getPage<IllustsPage>('/v1/user/illusts', {
 			'user_id': id,
 		}, callback);
 	}
 
-	async getUserBookmarks(
-		callback: (page: IllustsPage) => boolean,
-		id: number = this.token.user.id,
-		restrict: 'public' | 'private' = 'public',
-	){
+	async getUserBookmarks(callback: PageCallback<IllustsPage>, id: number = this.uid, restrict: Restrict = 'public'){
 		await this.getPage<IllustsPage>('/v1/user/bookmarks/illust', {
 			'user_id': id,
 			'restrict': restrict,
 		}, callback);
 	}
 
-	async getUserFollowings(
-		callback: (page: UsersPage) => boolean,
-		id: number = this.token.user.id,
-		restrict: 'public' | 'private' = 'public',
-	){
+	async getUserFollowings(callback: PageCallback<UsersPage>, id: number = this.uid, restrict: Restrict = 'public'){
 		await this.getPage<UsersPage>('/v1/user/following', {
 			'user_id': id,
 			'restrict': restrict,
