@@ -2,6 +2,7 @@
 Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
 - for source code, see [here](../src/api/pixiv-api.ts)
 - for code usages, see [readme](../README.md)
+- for interfaces, see [this directory](../src/api/types)
 
 <!-- omit in toc -->
 # Table of Contents 
@@ -39,45 +40,43 @@ Get/Refresh the access token and create a `PixivApi` instance
 ```ts
 static async login(email: string, password: string): Promise<PixivApi>
 ```
-- [Source code](../../331f70d9c2e56964d89ccbbb267753c85c19a019/src/api/pixiv-api.ts#L92)
-    - Parameters
-        - `email` user email or username
-        - `password` user password
-    - Returns
-        - a promised `PixivApi` instance that can be used to perform all other HTTP requests
-    - Note
-        - Pixiv will send an email saying new login, so use this only to get the refresh token
+- Parameters
+    - `email` user email or username
+    - `password` user password
+- Returns
+    - a promised `PixivApi` instance that can be used to perform all other HTTP requests
+- Note
+    - Pixiv will send an email saying new login, so use this only to get the refresh token
 
 ## Refresh
 ```ts
 static async refresh(refreshToken: string): Promise<PixivApi>
 ```
-- [Source code](../../331f70d9c2e56964d89ccbbb267753c85c19a019/src/api/pixiv-api.ts#L107)
-    - Parameters
-        - `refreshToken` user's refresh token (do not share it because it never expires!)
-    - Returns
-        - a promised `PixivApi` instance that can be used to perform all other HTTP requests
-    - Note
-        - Pixiv won't send email if user logs in with refresh token
+- Parameters
+    - `refreshToken` user's refresh token (do not share it because it never expires!)
+- Returns
+    - a promised `PixivApi` instance that can be used to perform all other HTTP requests
+- Note
+    - Pixiv won't send email if user logs in with refresh token
 
 # User
 Perform HTTP requests to `/v1/user/*`
 
 ## User Detail
 ```ts
-async getUserDetail(id: number = this.token.user.id): Promise<UserDetail>
+async getUserDetail(id: number = this.uid): Promise<UserDetail>
 ```
-- GET `/v1/user/detail` ([source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L120))
+- GET `/v1/user/detail`
     - Parameters
         - `id` user's id (or user id from the token by default)
     - Returns
-        - a promised `UserDetail` object, see [UserDetail interface](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/types/user.ts#L15) for more information
+        - a promised `UserDetail` object, see [UserDetail interface](../src/api/types/user.ts) for more information
 
 ## User Illustrations
 ```ts
-async getUserIllusts(callback: (page: IllustsPage) => boolean, id: number = this.token.user.id)
+async getUserIllusts(callback: PageCallback<IllustsPage>, id: number = this.uid)
 ```
-- GET `/v1/user/illusts` ([source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L126))
+- GET `/v1/user/illusts`
     - Parameters
         - `callback` a function that processes the result from the HTTP request
         - `id` user's id (or user id from the token by default)
@@ -85,13 +84,13 @@ async getUserIllusts(callback: (page: IllustsPage) => boolean, id: number = this
         - nothing because the result is processed in `callback`
     - Note
         - if `callback` returns `true`, the API will continue requesting the next page
-        - see [IllustsPage interface](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/types/user.ts#L69) for more information (but there's almost nothing there, so see [Illustration interface](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/types/illustration.ts#L3) for more details)
+        - see [IllustsPage interface](../src/api/types/user.ts) for more information (but there's almost nothing there, so see [Illustration interface](../src/api/types/illustration.ts) for more details)
 
 ## User Bookmarks
 ```ts
-async getUserBookmarks(callback, id: number = this.token.user.id, restrict: 'public' | 'private' = 'public')
+async getUserBookmarks(callback, id: number = this.uid, restrict: Restrict = 'public')
 ```
-- GET `/v1/user/bookmarks/illust` ([source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L132))
+- GET `/v1/user/bookmarks/illust`
     - Parameters
         - same as  [User Illustrations](#user-illustrations)
         - `restrict` public or private (don't request other people's private bookmarks)
@@ -105,8 +104,8 @@ Perform HTTP requests to `/v1/illust/*`
 ```ts
 async getIllustDetail(id: number): Promise<Illustration>
 ```
-- GET `/v1/illust/detail` ([source code](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/pixiv-api.ts#L147))
+- GET `/v1/illust/detail`
     - Parameters
         - `id` illustration id
     - Returns
-        - a promised `Illustration` object, see [Illustration interface](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/types/illustration.ts#L3) and [Artwork interface](../../14f3065a0bb8d83fc49ea6c52c8a5c1b05d3e66e/src/api/types/pixiv-object.ts#L13) for more information
+        - a promised `Illustration` object, see [Illustration interface](../src/api/types/illustration.ts) and [Artwork interface](../src/api/types/pixiv-object.ts) for more information
