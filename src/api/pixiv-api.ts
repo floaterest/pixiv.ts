@@ -7,7 +7,7 @@ import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './consta
 import { HttpClient, KeyValuePair } from './client';
 import { Token } from './types/token';
 import { PixivPage } from './types/pixiv-object';
-import { UserDetail, IllustsPage } from './types/user';
+import { UserDetail, IllustsPage, UsersPage } from './types/user';
 import { Illustration } from './types/illustration';
 
 export class PixivApi extends HttpClient{
@@ -98,6 +98,7 @@ export class PixivApi extends HttpClient{
 		};
 		return new PixivApi(await PixivApi.token(data));
 	}
+
 	//#endregion oauth
 
 	//#region get
@@ -126,6 +127,18 @@ export class PixivApi extends HttpClient{
 			'restrict': restrict,
 		}, callback);
 	}
+
+	async getUserFollowings(
+		callback: (page: UsersPage) => boolean,
+		id: number = this.token.user.id,
+		restrict: 'public' | 'private' = 'public',
+	){
+		await this.getPage<UsersPage>('/v1/user/following', {
+			'user_id': id,
+			'restrict': restrict,
+		}, callback);
+	}
+
 	//#endregion user
 
 	//#region illustration
@@ -135,6 +148,7 @@ export class PixivApi extends HttpClient{
 			'illust_id': id,
 		});
 	}
+
 	//#endregion illustration
 	//#endregion get
 }
