@@ -80,6 +80,7 @@ export class PixivApi extends HttpClient{
 		});
 	}
 
+	//noinspection JSUnusedLocalSymbols
 	static async login(email: string, password: string): Promise<PixivApi>{
 		// Pixiv-sama please
 		// let data = {
