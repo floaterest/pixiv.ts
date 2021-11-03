@@ -6,7 +6,7 @@ An npm module for [Pixiv](https://www.pixiv.net/en/) written in TypeScript
 # Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
-	- [PixivApi](#pixivapi)
+  - [PixivApi](#pixivapi)
 - [Todo](#todo)
 - [Contribution](#contribution)
 
@@ -34,34 +34,34 @@ import { PixivApi } from 'pixiv-typed';
 let refreshToken = 'refresh token here';
 
 PixivApi.refresh(refreshToken).then(api => {
-	//#region user
-	let pixivStaff = 11;
+  //#region user
+  let pixivStaff = 11;
 
-	// api.getUserDetail() for yourself
-	api.getUserDetail(pixivStaff).then(detail => {
-		// do stuff with 'detail' see doc for more info
-	});
+  // api.getUserDetail() for yourself
+  api.getUserDetail(pixivStaff).then(detail => {
+    // do stuff with 'detail' see doc for more info
+  });
 
-	api.getUserIllusts(page => {
-		// this will request all pages
-		// return false to stop requesting
-		return true;
-	}, pixivStaff).then();
+  api.getUserIllusts(page => {
+    // this will request all pages
+    // return false to stop requesting
+    return true;
+  }, pixivStaff).then();
 
-	api.getUserBookmarks(page => {
-		// only look for private bookmarks for yourself
-		return true;
-	}, pixivStaff, 'public').then();
+  api.getUserBookmarks(page => {
+    // only look for private bookmarks for yourself
+    return true;
+  }, pixivStaff, 'public').then();
 
-	//#endregion user
+  //#endregion user
 
-	//#region illustration
-	
-	let pixivAnniversary = 1580459;
-	api.getIllustDetail(pixivAnniversary).then(illust => {
-		// do stuff with 'illust'
-	});
-	//#endregion illustration
+  //#region illustration
+  
+  let pixivAnniversary = 1580459;
+  api.getIllustDetail(pixivAnniversary).then(illust => {
+    // do stuff with 'illust'
+  });
+  //#endregion illustration
 });
 
 ```
@@ -72,18 +72,18 @@ PixivApi.refresh(refreshToken).then(api => {
 # Todo
 [Back to top](#table-of-contents)
 - PixivApi
-	- user
-		- add other artwork type to getUserBookmarks
-		- add getUserFollowings
-		- add novels in UserPreview interface
-	- illust
-		- add add/delete bookmark
-	- general
-		- add "too many requests" handler support
-		- add file downloader and filename formatter
+  - user
+    - add other artwork type to getUserBookmarks
+    - add getUserFollowings
+    - add novels in UserPreview interface
+  - illust
+    - add add/delete bookmark
+  - general
+    - add "too many requests" handler support
+    - add file downloader and filename formatter
 - PixivDatabase
-	- add database structure
-	- add read/write support
+  - add database structure
+  - add read/write support
 
 # Contribution
 [Back to top](#table-of-contents)
