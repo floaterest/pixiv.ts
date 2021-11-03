@@ -6,11 +6,13 @@ import { md5 } from './md5';
 import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './constants';
 import { HttpClient, KeyValuePair } from './client';
 import { Token } from './types/token';
-import { PixivPage, PageCallback } from './types/pixiv-object';
+import { PixivPage } from './types/pixiv-object';
 import { UserDetail, IllustsPage, UsersPage } from './types/user';
 import { Illustration } from './types/illustration';
 
 type Restrict = 'public' | 'private';
+export type PageCallback<T extends PixivPage> = (page: T) => boolean;
+
 
 export class PixivApi extends HttpClient{
 	token: Token;

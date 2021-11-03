@@ -6,8 +6,6 @@ enum Restrict{
 	Private,
 }
 
-export type PageCallback<T extends PixivPage> = (page: T) => boolean;
-
 export interface PixivPage{
 	next_url: string | null
 }
