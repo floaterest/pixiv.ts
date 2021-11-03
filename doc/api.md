@@ -7,6 +7,9 @@ Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
 <!-- omit in toc -->
 # Table of Contents 
 - [Getting Started](#getting-started)
+- [Common Parameters](#common-parameters)
+    - [Restrict](#restrict)
+        - [Page Callback](#page-callback)
 - [OAuth](#oauth)
     - [Login](#login)
     - [Refresh](#refresh)
@@ -30,6 +33,22 @@ Pixiv uses **access token** as bearer authorization for each HTTP request. The a
 ```ts
 PixivApi.login('email','password').then(api => console.log(api.token.refresh_token));
 ```
+
+# Common Parameters
+## Restrict
+```ts
+type Restrict = 'public' | 'private';
+```
+- used in
+    - [get user bookmarks](#user-bookmarks)
+### Page Callback
+```ts
+type PageCallback<T extends PixivPage> = (page: T) => boolean;
+```
+- used in
+    - [get user illusts](#user-illustrations)
+    - [get user bookmarks](#user-bookmarks)
+- if callback returns `true`, the API will continue requesting the next page
 
 # OAuth
 [Back to top](#table-of-contents)
@@ -83,7 +102,6 @@ async getUserIllusts(callback: PageCallback<IllustsPage>, id: number = this.uid)
     - Returns
         - nothing because the result is processed in `callback`
     - Note
-        - if `callback` returns `true`, the API will continue requesting the next page
         - see [IllustsPage interface](../src/api/types/user.ts) for more information (but there's almost nothing there, so see [Illustration interface](../src/api/types/illustration.ts) for more details)
 
 ## User Bookmarks
