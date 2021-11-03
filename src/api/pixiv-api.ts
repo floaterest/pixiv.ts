@@ -11,7 +11,7 @@ import { UserDetail, IllustsPage, UsersPage } from './types/user';
 import { Illustration } from './types/illustration';
 
 type Restrict = 'public' | 'private';
-export type PageCallback<T extends PixivPage> = (page: T) => boolean;
+type PageCallback<T extends PixivPage> = (page: T) => boolean;
 
 
 export class PixivApi extends HttpClient{
