@@ -150,6 +150,16 @@ export class PixivApi extends HttpClient{
         });
     }
 
+    //#region bookmark
+
+    async addBookmark(id: number, restrict: Restrict = 'public'): Promise<void>{
+        await this.post('/v2/illust/bookmark/add', {
+            'illust_id': id,
+            'restrict': restrict,
+        });
+    }
+
+    //#endregion bookmark
     //#endregion illustration
     //#endregion get
 }
