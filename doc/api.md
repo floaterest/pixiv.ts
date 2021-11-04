@@ -9,7 +9,7 @@ Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
 - [Getting Started](#getting-started)
 - [Common Parameters](#common-parameters)
     - [Restrict](#restrict)
-        - [Page Callback](#page-callback)
+    - [Page Callback](#page-callback)
 - [OAuth](#oauth)
     - [Login](#login)
     - [Refresh](#refresh)
@@ -42,7 +42,7 @@ type Restrict = 'public' | 'private';
 ```
 - used in
     - [get user bookmarks](#user-bookmarks)
-### Page Callback
+## Page Callback
 ```ts
 type PageCallback<T extends PixivPage> = (page: T) => boolean;
 ```
