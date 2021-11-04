@@ -28,7 +28,7 @@ export class HttpClient{
         }));
     }
 
-    protected async post<T>(path: string, data: KeyValuePair): Promise<void>{
+    protected async post(path: string, data: KeyValuePair): Promise<void>{
         let options = Object.assign(this.options, {
             path: path,
             method: 'post',
