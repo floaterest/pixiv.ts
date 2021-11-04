@@ -159,6 +159,13 @@ export class PixivApi extends HttpClient{
         });
     }
 
+    async deleteBookmark(id: number, restrict: Restrict = 'public'): Promise<void>{
+        await this.post('/v1/illust/bookmark/delete', {
+            'illust_id': id,
+            'restrict': restrict,
+        });
+    }
+
     //#endregion bookmark
     //#endregion illustration
     //#endregion get
