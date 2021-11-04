@@ -133,7 +133,7 @@ export class PixivApi extends HttpClient{
         }, callback);
     }
 
-    async getUserFollowings(callback: PageCallback<UsersPage>, id: number = this.uid, restrict: Restrict = 'public'){
+    async getUserFollowing(callback: PageCallback<UsersPage>, id: number = this.uid, restrict: Restrict = 'public'){
         await this.getPage<UsersPage>('/v1/user/following', {
             'user_id': id,
             'restrict': restrict,
