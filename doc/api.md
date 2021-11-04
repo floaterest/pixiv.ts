@@ -17,6 +17,7 @@ Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
     - [User Detail](#user-detail)
     - [User Illustrations](#user-illustrations)
     - [User Bookmarks](#user-bookmarks)
+    - [User Following](#user-following)
 - [Illustration](#illustration)
     - [Illustration Detail](#illustration-detail)
 
@@ -114,6 +115,18 @@ async getUserBookmarks(callback, id: number = this.uid, restrict: Restrict = 'pu
         - `restrict` public or private (don't request other people's private bookmarks)
     - Returns
         - nothing because the result is processed in `callback`
+## User Following
+```ts
+async getUserFollowing(callback, id: number = this.uid, restrict: Restrict = 'public')
+```
+- GET `/v1/user/following`
+    - Parameters
+        - `callback` see [here](#page-callback)
+        - `id` user id, or token's user id by default
+        - `restrict` see [here](#page-callback)
+    - Returns
+        - nothing because the resut is processed in `callback`
+
 
 # Illustration
 Perform HTTP requests to `/v1/illust/*`
