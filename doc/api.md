@@ -56,7 +56,7 @@ type PageCallback<T extends PixivPage> = (page: T) => boolean;
 # OAuth
 [Back to top](#table-of-contents)
 
-Get/Refresh the access token and create a `PixivApi` instance
+> Get/Refresh the access token and create a `PixivApi` instance
 
 ## Login
 ```ts
@@ -82,7 +82,7 @@ static async refresh(refreshToken: string): Promise<PixivApi>
     - Pixiv won't send email if user logs in with refresh token
 
 # User
-Perform HTTP requests to `/v1/user/*`
+> Perform HTTP requests to `/v1/user/*`
 
 ## User Detail
 ```ts
@@ -100,7 +100,7 @@ async getUserIllusts(callback: PageCallback<IllustsPage>, id: number = this.uid)
 ```
 - GET `/v1/user/illusts`
     - Parameters
-        - `callback` a function that processes the result from the HTTP request
+        - `callback` see [here](#page-callback)
         - `id` user's id (or user id from the token by default)
     - Returns
         - nothing because the result is processed in `callback`
@@ -109,17 +109,19 @@ async getUserIllusts(callback: PageCallback<IllustsPage>, id: number = this.uid)
 
 ## User Bookmarks
 ```ts
-async getUserBookmarks(callback, id: number = this.uid, restrict: Restrict = 'public')
+async getUserBookmarks(callback: PageCallback<IllustsPage>, id: number = this.uid, restrict: Restrict = 'public')
 ```
 - GET `/v1/user/bookmarks/illust`
     - Parameters
-        - same as  [User Illustrations](#user-illustrations)
+        - `callback` see [here](#page-callback)
         - `restrict` public or private (don't request other people's private bookmarks)
     - Returns
         - nothing because the result is processed in `callback`
+    - Notes
+        - see [IllustsPage interface](../src/api/types/user.ts) and [Illustration interface](../src/api/types/illustration.ts) for more details
 ## User Following
 ```ts
-async getUserFollowing(callback, id: number = this.uid, restrict: Restrict = 'public')
+async getUserFollowing(callback: PageCallback<UsersPage>, id: number = this.uid, restrict: Restrict = 'public')
 ```
 - GET `/v1/user/following`
     - Parameters
@@ -128,10 +130,12 @@ async getUserFollowing(callback, id: number = this.uid, restrict: Restrict = 'pu
         - `restrict` see [here](#page-callback)
     - Returns
         - nothing because the resut is processed in `callback`
+    - Notes
+        - see [UsersPage and UserPreview interface](../src/api/types/user.ts) for more details
 
 
 # Illustration
-Perform HTTP requests to `/v1/illust/*`
+> Perform HTTP requests to `/v1/illust/*`
 
 ## Illustration Detail
 ```ts
