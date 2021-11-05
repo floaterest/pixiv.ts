@@ -20,6 +20,7 @@ Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
     - [User Following](#user-following)
 - [Illustration](#illustration)
     - [Illustration Detail](#illustration-detail)
+    - [Add Bookmark](#add-bookmark)
 
 # Getting Started
 [Back to top](#table-of-contents)
@@ -152,3 +153,15 @@ async getIllustDetail(id: number): Promise<Illustration>
         - `id`: illustration id
     - Returns
         - a promised `Illustration` object, see [Illustration interface](../src/api/types/illustration.ts) and [Artwork interface](../src/api/types/pixiv-object.ts) for more information
+
+## Add Bookmark
+[Back to top](#table-of-contents)
+```ts
+async addBookmark(id: number, restrict: Restrict = 'public')
+```
+- POST `/v2/illust/bookmark/add`
+    - Parameters
+        - `id`: illustration id
+        - `restrict`: see [here](#restrict)
+    - Returns
+        - a promised absolutely nothing
