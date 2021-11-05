@@ -63,8 +63,8 @@ type PageCallback<T extends PixivPage> = (page: T) => boolean;
 static async login(email: string, password: string): Promise<PixivApi>
 ```
 - Parameters
-    - `email` user email or username
-    - `password` user password
+    - `email`: user email or username
+    - `password`: user password
 - Returns
     - a promised `PixivApi` instance that can be used to perform all other HTTP requests
 - Note
@@ -76,7 +76,7 @@ static async login(email: string, password: string): Promise<PixivApi>
 static async refresh(refreshToken: string): Promise<PixivApi>
 ```
 - Parameters
-    - `refreshToken` user's refresh token (do not share it because it never expires!)
+    - `refreshToken`: user's refresh token (do not share it because it never expires!)
 - Returns
     - a promised `PixivApi` instance that can be used to perform all other HTTP requests
 - Note
@@ -92,7 +92,7 @@ async getUserDetail(id: number = this.uid): Promise<UserDetail>
 ```
 - GET `/v1/user/detail`
     - Parameters
-        - `id` user's id (or user id from the token by default)
+        - `id`: user's id (or user id from the token by default)
     - Returns
         - a promised `UserDetail` object, see [UserDetail interface](../src/api/types/user.ts) for more information
 
@@ -103,8 +103,8 @@ async getUserIllusts(callback: PageCallback<IllustsPage>, id: number = this.uid)
 ```
 - GET `/v1/user/illusts`
     - Parameters
-        - `callback` see [here](#page-callback)
-        - `id` user's id (or user id from the token by default)
+        - `callback`: see [here](#page-callback)
+        - `id`: user's id (or user id from the token by default)
     - Returns
         - nothing because the result is processed in `callback`
     - Note
@@ -117,8 +117,8 @@ async getUserBookmarks(callback: PageCallback<IllustsPage>, id: number = this.ui
 ```
 - GET `/v1/user/bookmarks/illust`
     - Parameters
-        - `callback` see [here](#page-callback)
-        - `restrict` public or private (don't request other people's private bookmarks)
+        - `callback`: see [here](#page-callback)
+        - `restrict`: public or private (don't request other people's private bookmarks)
     - Returns
         - nothing because the result is processed in `callback`
     - Notes
@@ -130,9 +130,9 @@ async getUserFollowing(callback: PageCallback<UsersPage>, id: number = this.uid,
 ```
 - GET `/v1/user/following`
     - Parameters
-        - `callback` see [here](#page-callback)
-        - `id` user id, or token's user id by default
-        - `restrict` see [here](#page-callback)
+        - `callback`: see [here](#page-callback)
+        - `id`: user id, or token's user id by default
+        - `restrict`: see [here](#page-callback)
     - Returns
         - nothing because the resut is processed in `callback`
     - Notes
@@ -149,6 +149,6 @@ async getIllustDetail(id: number): Promise<Illustration>
 ```
 - GET `/v1/illust/detail`
     - Parameters
-        - `id` illustration id
+        - `id`: illustration id
     - Returns
         - a promised `Illustration` object, see [Illustration interface](../src/api/types/illustration.ts) and [Artwork interface](../src/api/types/pixiv-object.ts) for more information
