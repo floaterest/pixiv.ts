@@ -42,6 +42,7 @@ type Restrict = 'public' | 'private';
 ```
 - used in
     - [get user bookmarks](#user-bookmarks)
+    - [get user following](#user-following)
 ## Page Callback
 ```ts
 type PageCallback<T extends PixivPage> = (page: T) => boolean;
@@ -49,6 +50,7 @@ type PageCallback<T extends PixivPage> = (page: T) => boolean;
 - used in
     - [get user illusts](#user-illustrations)
     - [get user bookmarks](#user-bookmarks)
+    - [get user following](#user-following)
 - if callback returns `true`, the API will continue requesting the next page
 
 # OAuth
