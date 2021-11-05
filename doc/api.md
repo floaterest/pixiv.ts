@@ -36,6 +36,7 @@ PixivApi.login('email','password').then(api => console.log(api.token.refresh_tok
 ```
 
 # Common Parameters
+[Back to top](#table-of-contents)
 ## Restrict
 ```ts
 type Restrict = 'public' | 'private';
@@ -54,11 +55,10 @@ type PageCallback<T extends PixivPage> = (page: T) => boolean;
 - if callback returns `true`, the API will continue requesting the next page
 
 # OAuth
-[Back to top](#table-of-contents)
-
 > Get/Refresh the access token and create a `PixivApi` instance
 
 ## Login
+[Back to top](#table-of-contents)
 ```ts
 static async login(email: string, password: string): Promise<PixivApi>
 ```
@@ -71,6 +71,7 @@ static async login(email: string, password: string): Promise<PixivApi>
     - Pixiv will send an email saying new login, so use this only to get the refresh token
 
 ## Refresh
+[Back to top](#table-of-contents)
 ```ts
 static async refresh(refreshToken: string): Promise<PixivApi>
 ```
@@ -85,6 +86,7 @@ static async refresh(refreshToken: string): Promise<PixivApi>
 > Perform HTTP requests to `/v1/user/*`
 
 ## User Detail
+[Back to top](#table-of-contents)
 ```ts
 async getUserDetail(id: number = this.uid): Promise<UserDetail>
 ```
@@ -95,6 +97,7 @@ async getUserDetail(id: number = this.uid): Promise<UserDetail>
         - a promised `UserDetail` object, see [UserDetail interface](../src/api/types/user.ts) for more information
 
 ## User Illustrations
+[Back to top](#table-of-contents)
 ```ts
 async getUserIllusts(callback: PageCallback<IllustsPage>, id: number = this.uid)
 ```
@@ -108,6 +111,7 @@ async getUserIllusts(callback: PageCallback<IllustsPage>, id: number = this.uid)
         - see [IllustsPage interface](../src/api/types/user.ts) for more information (but there's almost nothing there, so see [Illustration interface](../src/api/types/illustration.ts) for more details)
 
 ## User Bookmarks
+[Back to top](#table-of-contents)
 ```ts
 async getUserBookmarks(callback: PageCallback<IllustsPage>, id: number = this.uid, restrict: Restrict = 'public')
 ```
@@ -120,6 +124,7 @@ async getUserBookmarks(callback: PageCallback<IllustsPage>, id: number = this.ui
     - Notes
         - see [IllustsPage interface](../src/api/types/user.ts) and [Illustration interface](../src/api/types/illustration.ts) for more details
 ## User Following
+[Back to top](#table-of-contents)
 ```ts
 async getUserFollowing(callback: PageCallback<UsersPage>, id: number = this.uid, restrict: Restrict = 'public')
 ```
@@ -138,6 +143,7 @@ async getUserFollowing(callback: PageCallback<UsersPage>, id: number = this.uid,
 > Perform HTTP requests to `/v1/illust/*`
 
 ## Illustration Detail
+[Back to top](#table-of-contents)
 ```ts
 async getIllustDetail(id: number): Promise<Illustration>
 ```
