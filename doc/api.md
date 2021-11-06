@@ -21,6 +21,7 @@ Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
 - [Illustration](#illustration)
     - [Illustration Detail](#illustration-detail)
     - [Add Bookmark](#add-bookmark)
+    - [Delete Bookmark](#delete-bookmark)
 
 # Getting Started
 [Back to top](#table-of-contents)
@@ -165,3 +166,16 @@ async addBookmark(id: number, restrict: Restrict = 'public')
         - `restrict`: see [here](#restrict)
     - Returns
         - a promised absolutely nothing
+
+## Delete Bookmark
+[Back to top](#table-of-contents)
+```ts
+async deleteBookmark(id: number, restrict: Restrict = 'public')
+```
+- POST `v1/illust/bookmark/delete`
+    - Parameters
+        - `id`: illustration id
+        - `restrict`: see [here](#restrict)
+    - Returns
+        - a promised void
+
