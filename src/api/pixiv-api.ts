@@ -110,8 +110,6 @@ export class PixivApi extends HttpClient{
 
     //#endregion oauth
 
-    //#region get
-
     //#region user
 
     async getUserDetail(id: number = this.uid): Promise<UserDetail>{
@@ -168,5 +166,4 @@ export class PixivApi extends HttpClient{
 
     //#endregion bookmark
     //#endregion illustration
-    //#endregion get
 }
