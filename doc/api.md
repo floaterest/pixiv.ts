@@ -46,6 +46,9 @@ type Restrict = 'public' | 'private';
 - used in
     - [get user bookmarks](#user-bookmarks)
     - [get user following](#user-following)
+    - [add bookmark](#add-bookmark)
+    - [delete bookmark](#delete-bookmark)
+
 ## Page Callback
 ```ts
 type PageCallback<T extends PixivPage> = (page: T) => boolean;
