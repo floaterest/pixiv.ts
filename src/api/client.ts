@@ -15,6 +15,8 @@ export class HttpClient{
         let options = Object.assign(this.options, { path: path });
         return new Promise(((resolve, reject) => {
             const req = https.get(options, res => {
+                if(res.statusCode != 200) reject(`${res.statusCode} ${res.statusMessage}`);
+
                 let data = '';
                 res.on('data', chunk => data += chunk);
                 res.on('end', () => resolve(JSON.parse(data)));
@@ -36,6 +38,8 @@ export class HttpClient{
         });
         return new Promise((resolve, reject) => {
             const req = https.request(options, res => {
+                if(res.statusCode != 200) reject(`${res.statusCode} ${res.statusMessage}`);
+
                 let data = '';
                 res.on('data', chunk => data += chunk);
                 res.on('end', () => resolve());
@@ -55,9 +59,12 @@ export class HttpClient{
         // dest must be path to a file
         const ws = fs.createWriteStream(dest);
         const req = https.get(url, { headers: { 'Referer': referer } }, res => {
-            res.on('data', chunk => ws.write(chunk));
-            res.on('end', () => console.log(`file written at ${dest}`));
-        });
+                if(res.statusCode != 200) throw Error(`${res.statusCode} ${res.statusMessage}`);
+
+                res.on('data', chunk => ws.write(chunk));
+                res.on('end', () => console.log(`file written at ${dest}`));
+            },
+        );
 
         req.on('error', err => {
             throw err;
