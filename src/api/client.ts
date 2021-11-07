@@ -2,14 +2,14 @@ import https, { RequestOptions } from 'https';
 import querystring from 'querystring';
 import fs from 'fs';
 
-export type KeyValuePair = Record<string, string | number | boolean>;
+export type Dict = Record<string, string | number | boolean>;
 
 export class HttpClient{
     protected get options(): RequestOptions{
         return {};
     }
 
-    protected async get<T>(path: string, params: KeyValuePair | null = null): Promise<T>{
+    protected async get<T>(path: string, params: Dict | null = null): Promise<T>{
         if(params != null) path += `?${querystring.stringify(params!)}`;
 
         let options = Object.assign(this.options, { path: path });
@@ -29,7 +29,7 @@ export class HttpClient{
         }));
     }
 
-    protected async post(path: string, data: KeyValuePair): Promise<void>{
+    protected async post(path: string, data: Dict): Promise<void>{
         let options = Object.assign(this.options, {
             path: path,
             method: 'post',
