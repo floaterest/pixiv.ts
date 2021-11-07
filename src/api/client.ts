@@ -52,7 +52,7 @@ export class HttpClient{
         });
     }
 
-    protected async write(url: string, dest: string, override = false, referer: string){
+    protected static async write(url: string, dest: string, override = false, referer: string){
         await fs.stat(dest, (err, stats) => {
             if(!err && stats.isFile() && !override){
                 throw Error(`The file '${dest}' already exists!`);
