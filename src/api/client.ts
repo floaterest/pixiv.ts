@@ -1,7 +1,6 @@
 import https, { RequestOptions } from 'https';
 import querystring from 'querystring';
 import fs from 'fs';
-import path from 'path';
 
 export type KeyValuePair = Record<string, string | number | boolean>;
 
@@ -52,34 +51,22 @@ export class HttpClient{
         });
     }
 
-    protected static async write(url: string, dest: string, override = false, referer: string){
-        await fs.stat(dest, (err, stats) => {
-            if(!err && stats.isFile() && !override){
-                throw Error(`The file '${dest}' already exists!`);
-            }
-            // define a directory as path ending with a path separator (/ or \)
-            if(err && (dest.endsWith('/') || dest.endsWith('\\'))){
-                throw Error(`The directory '${dest}' does not exist!`);
-            }
-
-            // append file name if needed
-            dest += stats.isDirectory() ? path.basename(url) : '';
-
-            const ws = fs.createWriteStream(dest);
-            const req = https.get(url, { headers: { 'Referer': referer } }, res => {
-                res.on('data', chunk => ws.write(chunk));
-                res.on('end', () => console.log(`file written at ${dest}`));
-            });
-
-            req.on('error', err => {
-                throw err;
-            });
-            req.on('timeout', () => {
-                req.destroy();
-                throw new Error('Request time out');
-            });
-            req.end();
+    protected static async write(url: string, dest: string, referer: string){
+        // dest must be path to a file
+        const ws = fs.createWriteStream(dest);
+        const req = https.get(url, { headers: { 'Referer': referer } }, res => {
+            res.on('data', chunk => ws.write(chunk));
+            res.on('end', () => console.log(`file written at ${dest}`));
         });
+
+        req.on('error', err => {
+            throw err;
+        });
+        req.on('timeout', () => {
+            req.destroy();
+            throw new Error('Request time out');
+        });
+        req.end();
     }
 
 }
