@@ -40,8 +40,6 @@ export class HttpClient{
             const req = https.request(options, res => {
                 if(res.statusCode != 200) reject(`${res.statusCode} ${res.statusMessage}`);
 
-                let data = '';
-                res.on('data', chunk => data += chunk);
                 res.on('end', () => resolve());
             });
 
