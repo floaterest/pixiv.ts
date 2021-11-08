@@ -54,24 +54,26 @@ export class HttpClient{
     }
 
     protected static async write(url: string, dest: string, referer: string){
-        // dest must be path to a file
-        const ws = fs.createWriteStream(dest);
-        const req = https.get(url, { headers: { 'Referer': referer } }, res => {
-                if(res.statusCode != 200) throw Error(`${res.statusCode} ${res.statusMessage}`);
+        return new Promise((resolve, reject) => {
+            // dest must be path to a file
+            const ws = fs.createWriteStream(dest);
+            const req = https.get(url, { headers: { 'Referer': referer } }, res => {
+                    if(res.statusCode != 200) reject(`${res.statusCode} ${res.statusMessage}`);
 
-                res.on('data', chunk => ws.write(chunk));
-                res.on('end', () => console.log(`file written at ${dest}`));
-            },
-        );
+                    res.on('data', chunk => ws.write(chunk));
+                    res.on('end', () => console.log(`file written at ${dest}`));
+                },
+            );
 
-        req.on('error', err => {
-            throw err;
+            req.on('error', err => {
+                throw err;
+            });
+            req.on('timeout', () => {
+                req.destroy();
+                throw new Error('Request time out');
+            });
+            req.end();
         });
-        req.on('timeout', () => {
-            req.destroy();
-            throw new Error('Request time out');
-        });
-        req.end();
     }
 
 }
