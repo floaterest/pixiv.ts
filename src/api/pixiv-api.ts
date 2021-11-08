@@ -47,7 +47,7 @@ export class PixivApi extends HttpClient{
         }
     }
 
-    static async download(url: string, dest = './', override = false){
+    static async download(url: string, dest = './', override = false): Promise<void>{
         await fs.stat(dest, (err, stats) => {
             if(!err && stats.isFile() && !override){
                 throw Error(`The file '${dest}' already exists!`);
