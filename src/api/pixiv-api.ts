@@ -58,7 +58,7 @@ export class PixivApi extends HttpClient{
             }
 
             // append file name if needed
-            dest += stats.isDirectory() ? path.basename(url) : '';
+            if(stats.isDirectory()) dest += path.basename(url)
 
             this.write(url, dest, 'https://' + HOST).catch(err => {
                 throw err;

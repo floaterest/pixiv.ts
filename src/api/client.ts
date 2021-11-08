@@ -25,9 +25,10 @@ export class HttpClient{
     }
 
     protected async get<T>(path: string, params: Dict = {}): Promise<T>{
+        if(params) path += `?${querystring.stringify(params)}`;
         let options = Object.assign(this.options, {
             method: 'get',
-            path: path + (params ? `?${querystring.stringify(params)}` : ''),
+            path: path,
         });
         return new Promise<T>((resolve, reject) => {
             HttpClient.request(options, res => {
