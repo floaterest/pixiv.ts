@@ -4,11 +4,13 @@ import https, { RequestOptions } from 'https';
 
 import { md5 } from './md5';
 import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './constants';
-import { HttpClient, KeyValuePair } from './client';
+import { HttpClient, Dict } from './client';
 import { Token } from './types/token';
 import { PixivPage } from './types/pixiv-object';
 import { UserDetail, IllustsPage, UsersPage } from './types/user';
 import { Illustration } from './types/illustration';
+import fs from 'fs';
+import path from 'path';
 
 type Restrict = 'public' | 'private';
 type PageCallback<T extends PixivPage> = (page: T) => boolean;
@@ -36,7 +38,7 @@ export class PixivApi extends HttpClient{
         return this.token.user.id;
     }
 
-    private async getPage<T extends PixivPage>(path: string, params: KeyValuePair, callback: PageCallback<T>){
+    private async getPage<T extends PixivPage>(path: string, params: Dict, callback: PageCallback<T>){
         let page = await this.get<T>(path, params);
         let url: URL;
         while(callback(page) && page.next_url){
@@ -45,9 +47,28 @@ export class PixivApi extends HttpClient{
         }
     }
 
+    static async download(url: string, dest = './', override = false){
+        await fs.stat(dest, (err, stats) => {
+            if(!err && stats.isFile() && !override){
+                throw Error(`The file '${dest}' already exists!`);
+            }
+            // define a directory as path ending with a path separator (/ or \)
+            if(err && (dest.endsWith('/') || dest.endsWith('\\'))){
+                throw Error(`The directory '${dest}' does not exist!`);
+            }
+
+            // append file name if needed
+            dest += stats.isDirectory() ? path.basename(url) : '';
+
+            this.write(url, dest, 'https://' + HOST).catch(err => {
+                throw err;
+            });
+        });
+    }
+
     //#region oauth
 
-    private static async token(data: KeyValuePair): Promise<Token>{
+    private static async token(data: Dict): Promise<Token>{
         Object.assign(data, {
             'get_secure_url': true,
             'include_policy': true,
