@@ -1,6 +1,8 @@
 import https, { RequestOptions } from 'https';
 import querystring from 'querystring';
 import fs from 'fs';
+import { IncomingMessage } from 'http';
+import { URL } from 'url';
 
 export type Dict = Record<string, string | number | boolean>;
 
@@ -9,70 +11,68 @@ export class HttpClient{
         return {};
     }
 
-    protected async get<T>(path: string, params: Dict | null = null): Promise<T>{
-        if(params != null) path += `?${querystring.stringify(params!)}`;
+    private static async request(options: RequestOptions, callback: (res: IncomingMessage) => void, data: Dict = {}){
+        const req = https.request(options, res => callback(res));
+        req.on('error', err => {
+            throw err;
+        });
+        req.on('timeout', () => {
+            req.destroy();
+            throw Error(`Request to ${options.path} timed out`);
+        });
+        if(data) req.write(querystring.stringify(data));
+        req.end();
+    }
 
-        let options = Object.assign(this.options, { path: path });
-        return new Promise(((resolve, reject) => {
-            const req = https.get(options, res => {
+    protected async get<T>(path: string, params: Dict = {}): Promise<T>{
+        let options = Object.assign(this.options, {
+            method: 'get',
+            path: path + (params ? `?${querystring.stringify(params)}` : ''),
+        });
+        return new Promise<T>((resolve, reject) => {
+            HttpClient.request(options, res => {
                 if(res.statusCode != 200) reject(`${res.statusCode} ${res.statusMessage}`);
 
                 let data = '';
                 res.on('data', chunk => data += chunk);
-                res.on('end', () => resolve(JSON.parse(data)));
+                res.on('end', () => resolve(JSON.parse(data) as T));
             });
-
-            req.on('error', err => reject(err));
-            req.on('timeout', () => {
-                req.destroy();
-                reject(new Error('Request time out'));
-            });
-            req.end();
-        }));
+        });
     }
 
     protected async post(path: string, data: Dict): Promise<void>{
         let options = Object.assign(this.options, {
-            path: path,
             method: 'post',
+            path: path,
         });
         return new Promise((resolve, reject) => {
-            const req = https.request(options, res => {
+            HttpClient.request(options, res => {
                 if(res.statusCode != 200) reject(`${res.statusCode} ${res.statusMessage}`);
 
                 res.on('end', () => resolve());
-            });
-
-            req.on('error', err => reject(err));
-            req.on('timeout', () => {
-                req.destroy();
-                reject(new Error('Request time out'));
-            });
-            req.write(querystring.stringify(data));
-            req.end();
+            }, data);
         });
     }
 
-    protected static async write(url: string, dest: string, referer: string){
+    protected static async write(url: string, dest: string, referer: string): Promise<boolean>{
+        let u = new URL(url);
+        let options: RequestOptions = {
+            hostname: u.hostname,
+            path: u.pathname,
+            method: 'get',
+            headers: {
+                'Referer': referer,
+            },
+        };
         return new Promise((resolve, reject) => {
             // dest must be path to a file
             const ws = fs.createWriteStream(dest);
-            const req = https.get(url, { headers: { 'Referer': referer } }, res => {
-                    if(res.statusCode != 200) reject(`${res.statusCode} ${res.statusMessage}`);
+            HttpClient.request(options, res => {
+                if(res.statusCode != 200) reject(`${res.statusCode} ${res.statusMessage}`);
 
-                    res.on('data', chunk => ws.write(chunk));
-                    res.on('end', () => console.log(`file written at ${dest}`));
-                },
-            );
-
-            req.on('error', err => {
-                throw err;
+                res.on('data', chunk => ws.write(chunk));
+                res.on('end', () => resolve(true));
             });
-            req.on('timeout', () => {
-                req.destroy();
-                throw new Error('Request time out');
-            });
-            req.end();
         });
     }
 
