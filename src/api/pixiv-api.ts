@@ -58,7 +58,7 @@ export class PixivApi extends HttpClient{
             }
 
             // append file name if needed
-            if(stats.isDirectory()) dest += path.basename(url)
+            if(stats.isDirectory()) dest += path.basename(url);
 
             this.write(url, dest, 'https://' + HOST).catch(err => {
                 throw err;
@@ -164,9 +164,9 @@ export class PixivApi extends HttpClient{
     //#region illustration
 
     async getIllustDetail(id: number): Promise<Illustration>{
-        return await this.get<Illustration>('/v1/illust/detail', {
+        return (await this.get('/v1/illust/detail', {
             'illust_id': id,
-        });
+        }) as { 'illust': Illustration }).illust;
     }
 
     //#region bookmark
