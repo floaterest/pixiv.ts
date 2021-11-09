@@ -17,6 +17,7 @@ export interface Artwork{
     restrict: Restrict
     x_restrict: boolean // true if r18
     create_date: string // iso
+    page_count:number
     tags: {
         name: string
         translated_name: string | null
