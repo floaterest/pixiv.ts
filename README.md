@@ -4,6 +4,7 @@ An npm module for [Pixiv](https://www.pixiv.net/en/) written in TypeScript
 <!-- omit in toc -->
 
 # Table of Contents
+- [Table of Contents](#table-of-contents)
 - [Installation](#installation)
 - [Usage](#usage)
   - [PixivApi](#pixivapi)
@@ -33,34 +34,31 @@ import { PixivApi } from 'pixiv-typed';
 
 let refreshToken = 'refresh token here';
 
-PixivApi.refresh(refreshToken).then(api => {
+PixivApi.refresh(refreshToken).then(async api => {
   //#region user
   let pixivStaff = 11;
 
   // api.getUserDetail() for yourself
-  api.getUserDetail(pixivStaff).then(detail => {
-    // do stuff with 'detail' see doc for more info
-  });
+      // do stuff with 'detail' see doc for more info
+  let detail = await api.getUserDetail(pixivStaff)
 
-  api.getUserIllusts(page => {
-    // this will request all pages
-    // return false to stop requesting
-    return true;
-  }, pixivStaff).then();
+  await api.getUserIllusts(page => {
+      // this will request all pages
+      // return false to stop requesting
+      return true;
+  }, pixivStaff);
 
-  api.getUserBookmarks(page => {
-    // only look for private bookmarks for yourself
-    return true;
-  }, pixivStaff, 'public').then();
+  await api.getUserBookmarks(page => {
+      // only look for private bookmarks for yourself
+      return true;
+  }, pixivStaff, 'public');
 
   //#endregion user
 
   //#region illustration
-  
+
   let pixivAnniversary = 1580459;
-  api.getIllustDetail(pixivAnniversary).then(illust => {
-    // do stuff with 'illust'
-  });
+  let illust = api.getIllustDetail(pixivAnniversary);
   //#endregion illustration
 });
 
