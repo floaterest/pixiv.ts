@@ -53,12 +53,20 @@ PixivApi.refresh(refreshToken).then(async api => {
       return true;
   }, pixivStaff, 'public');
 
+  await api.getUserFollowing(page => {
+      // get public following for yourself
+      return true;
+  });
   //#endregion user
 
   //#region illustration
 
   let pixivAnniversary = 1580459;
   let illust = api.getIllustDetail(pixivAnniversary);
+  // add public bookmark
+  await api.addBookmark(pixivAnniversary);
+  // delete private bookmark
+  await api.deleteBookmark(pixivAnniversary, 'private');
   //#endregion illustration
 });
 
