@@ -62,7 +62,7 @@ PixivApi.refresh(refreshToken).then(async api => {
   //#region illustration
 
   let pixivAnniversary = 1580459;
-  let illust = api.getIllustDetail(pixivAnniversary);
+  let illust = await api.getIllustDetail(pixivAnniversary);
   // add public bookmark
   await api.addBookmark(pixivAnniversary);
   // delete private bookmark
