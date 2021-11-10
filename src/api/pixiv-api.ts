@@ -47,18 +47,14 @@ export class PixivApi extends HttpClient{
         }
     }
 
-    static async download(url: string, dest = './', override = false): Promise<void>{
+    static async download(url: string, dest = path.basename(url), override = false): Promise<void>{
         await fs.stat(dest, (err, stats) => {
             if(!err && stats.isFile() && !override){
                 throw Error(`The file '${dest}' already exists!`);
             }
-            // define a directory as path ending with a path separator (/ or \)
-            if(err && (dest.endsWith('/') || dest.endsWith('\\'))){
-                throw Error(`The directory '${dest}' does not exist!`);
-            }
 
-            // append file name if needed
-            if(stats.isDirectory()) dest += path.basename(url);
+            // add ext if needed
+            if(!path.extname(dest)) dest += path.extname(url);
 
             this.write(url, dest, 'https://' + HOST).catch(err => {
                 throw err;
