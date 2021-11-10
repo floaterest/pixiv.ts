@@ -74,6 +74,9 @@ let refreshToken = 'refresh token here';
     let url = illust.page_count == 1
         ? illust.meta_single_page.original_image_url!
         : illust.meta_pages[0].image_urls.original!;
+    // download to ./ and throw error if overriding
+    // no need to login
+    await PixivApi.download(url);
 })();
 ```
 </details>
