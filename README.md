@@ -34,42 +34,47 @@ import { PixivApi } from 'pixiv-typed';
 
 let refreshToken = 'refresh token here';
 
-PixivApi.refresh(refreshToken).then(async api => {
-  //#region user
-  let pixivStaff = 11;
+(async function(){
+    let api = await PixivApi.refresh(refreshToken);
+    //#region user
+    let pixivStaff = 11;
 
-  // api.getUserDetail() for yourself
-      // do stuff with 'detail' see doc for more info
-  let detail = await api.getUserDetail(pixivStaff)
+    // api.getUserDetail() for yourself
+    // do stuff with 'detail' see doc for more info
+    let detail = await api.getUserDetail(pixivStaff);
 
-  await api.getUserIllusts(page => {
-      // this will request all pages
-      // return false to stop requesting
-      return true;
-  }, pixivStaff);
+    await api.getUserIllusts(page => {
+        // this will request all pages
+        // return false to stop requesting
+        return true;
+    }, pixivStaff);
 
-  await api.getUserBookmarks(page => {
-      // only look for private bookmarks for yourself
-      return true;
-  }, pixivStaff, 'public');
+    await api.getUserBookmarks(page => {
+        // only look for private bookmarks for yourself
+        return true;
+    }, pixivStaff, 'public');
 
-  await api.getUserFollowing(page => {
-      // get public following for yourself
-      return true;
-  });
-  //#endregion user
+    await api.getUserFollowing(page => {
+        // get public following for yourself
+        return true;
+    });
+    //#endregion user
 
-  //#region illustration
+    //#region illustration
 
-  let pixivAnniversary = 1580459;
-  let illust = await api.getIllustDetail(pixivAnniversary);
-  // add public bookmark
-  await api.addBookmark(pixivAnniversary);
-  // delete private bookmark
-  await api.deleteBookmark(pixivAnniversary, 'private');
-  //#endregion illustration
-});
+    let pixivAnniversary = 1580459;
+    let illust = await api.getIllustDetail(pixivAnniversary);
+    // add public bookmark
+    await api.addBookmark(pixivAnniversary);
+    // delete private bookmark
+    await api.deleteBookmark(pixivAnniversary, 'private');
+    //#endregion illustration
 
+    // get original image url (this is frustrating I know)
+    let url = illust.page_count == 1
+        ? illust.meta_single_page.original_image_url!
+        : illust.meta_pages[0].image_urls.original!;
+})();
 ```
 </details>
 
