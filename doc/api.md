@@ -22,6 +22,7 @@ Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
     - [Illustration Detail](#illustration-detail)
     - [Add Bookmark](#add-bookmark)
     - [Delete Bookmark](#delete-bookmark)
+- [Download Illustration](#download-illustration)
 
 # Getting Started
 [Back to top](#table-of-contents)
@@ -182,3 +183,14 @@ async deleteBookmark(id: number, restrict: Restrict = 'public')
     - Returns
         - a promised void
 
+# Download Illustration
+[Back to top](#table-of-contents)
+```ts
+static async download(url: string, dest = path.basename(url), override = false)
+```
+- Parameters
+    - `url`: image url, see [readme](../README.md#pixivapi) for how to get it
+    - `dest`: destination file name, extension can be omitted
+    - `override`: throws error if `false` and file already exists
+- Notes
+    - this method is static, therefore no need to login
