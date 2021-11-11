@@ -12,9 +12,6 @@ import { Illustration } from './types/illustration';
 import fs from 'fs';
 import path from 'path';
 
-type Restrict = 'public' | 'private';
-type PageCallback<T extends PixivPage> = (page: T) => boolean;
-
 
 export class PixivApi extends HttpClient{
     token: Token;
@@ -38,7 +35,7 @@ export class PixivApi extends HttpClient{
         return this.token.user.id;
     }
 
-    private async getPage<T extends PixivPage>(path: string, params: Dict, callback: PageCallback<T>){
+    private async getPage<T extends PixivPage>(path: string, params: Dict, callback: (page: T) => boolean){
         let page = await this.get<T>(path, params);
         let url: URL;
         while(callback(page) && page.next_url){
@@ -135,20 +132,28 @@ export class PixivApi extends HttpClient{
         });
     }
 
-    async getUserIllusts(callback: PageCallback<IllustsPage>, id: number = this.uid): Promise<void>{
+    async getUserIllusts(callback: (page: IllustsPage) => boolean, id: number = this.uid): Promise<void>{
         await this.getPage<IllustsPage>('/v1/user/illusts', {
             'user_id': id,
         }, callback);
     }
 
-    async getUserBookmarks(callback: PageCallback<IllustsPage>, id: number = this.uid, restrict: Restrict = 'public'){
+    async getUserBookmarks(
+        callback: (page: IllustsPage) => boolean,
+        id: number = this.uid,
+        restrict: 'public' | 'private' = 'public',
+    ){
         await this.getPage<IllustsPage>('/v1/user/bookmarks/illust', {
             'user_id': id,
             'restrict': restrict,
         }, callback);
     }
 
-    async getUserFollowing(callback: PageCallback<UsersPage>, id: number = this.uid, restrict: Restrict = 'public'){
+    async getUserFollowing(
+        callback: (page: UsersPage) => boolean,
+        id: number = this.uid,
+        restrict: 'public' | 'private' = 'public',
+    ){
         await this.getPage<UsersPage>('/v1/user/following', {
             'user_id': id,
             'restrict': restrict,
@@ -167,14 +172,14 @@ export class PixivApi extends HttpClient{
 
     //#region bookmark
 
-    async addBookmark(id: number, restrict: Restrict = 'public'): Promise<void>{
+    async addBookmark(id: number, restrict: 'public' | 'private' = 'public'): Promise<void>{
         await this.post('/v2/illust/bookmark/add', {
             'illust_id': id,
             'restrict': restrict,
         });
     }
 
-    async deleteBookmark(id: number, restrict: Restrict = 'public'): Promise<void>{
+    async deleteBookmark(id: number, restrict: 'public' | 'private' = 'public'): Promise<void>{
         await this.post('/v1/illust/bookmark/delete', {
             'illust_id': id,
             'restrict': restrict,
