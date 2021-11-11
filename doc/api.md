@@ -7,9 +7,6 @@ Promise based API wrapper for [Pixiv](https://www.pixiv.net/) including typings
 <!-- omit in toc -->
 # Table of Contents 
 - [Getting Started](#getting-started)
-- [Common Parameters](#common-parameters)
-    - [Restrict](#restrict)
-    - [Page Callback](#page-callback)
 - [OAuth](#oauth)
     - [Login](#login)
     - [Refresh](#refresh)
@@ -37,28 +34,6 @@ Pixiv uses **access token** as bearer authorization for each HTTP request. The a
 ```ts
 PixivApi.login('email','password').then(api => console.log(api.token.refresh_token));
 ```
-
-# Common Parameters
-[Back to top](#table-of-contents)
-## Restrict
-```ts
-type Restrict = 'public' | 'private';
-```
-- used in
-    - [get user bookmarks](#user-bookmarks)
-    - [get user following](#user-following)
-    - [add bookmark](#add-bookmark)
-    - [delete bookmark](#delete-bookmark)
-
-## Page Callback
-```ts
-type PageCallback<T extends PixivPage> = (page: T) => boolean;
-```
-- used in
-    - [get user illusts](#user-illustrations)
-    - [get user bookmarks](#user-bookmarks)
-    - [get user following](#user-following)
-- if callback returns `true`, the API will continue requesting the next page
 
 # OAuth
 > Get/Refresh the access token and create a `PixivApi` instance
@@ -105,11 +80,11 @@ async getUserDetail(id: number = this.uid): Promise<UserDetail>
 ## User Illustrations
 [Back to top](#table-of-contents)
 ```ts
-async getUserIllusts(callback: PageCallback<IllustsPage>, id: number = this.uid)
+async getUserIllusts(callback: (page: IllustsPage) => boolean, id: number = this.uid)
 ```
 - GET `/v1/user/illusts`
     - Parameters
-        - `callback`: see [here](#page-callback)
+        - `callback`: if callback returns `true`, the API will continue requesting the next page
         - `id`: user's id (or user id from the token by default)
     - Returns
         - nothing because the result is processed in `callback`
@@ -119,11 +94,11 @@ async getUserIllusts(callback: PageCallback<IllustsPage>, id: number = this.uid)
 ## User Bookmarks
 [Back to top](#table-of-contents)
 ```ts
-async getUserBookmarks(callback: PageCallback<IllustsPage>, id: number = this.uid, restrict: Restrict = 'public')
+async getUserBookmarks(callback: (page: IllustsPage) => boolean, id: number = this.uid, restrict: Restrict = 'public')
 ```
 - GET `/v1/user/bookmarks/illust`
     - Parameters
-        - `callback`: see [here](#page-callback)
+        - `callback`: if callback returns `true`, the API will continue requesting the next page
         - `restrict`: public or private (don't request other people's private bookmarks)
     - Returns
         - nothing because the result is processed in `callback`
@@ -132,13 +107,13 @@ async getUserBookmarks(callback: PageCallback<IllustsPage>, id: number = this.ui
 ## User Following
 [Back to top](#table-of-contents)
 ```ts
-async getUserFollowing(callback: PageCallback<UsersPage>, id: number = this.uid, restrict: Restrict = 'public')
+async getUserFollowing(callback: callback: (page: UsersPage) => boolean, id: number = this.uid, restrict: Restrict = 'public')
 ```
 - GET `/v1/user/following`
     - Parameters
-        - `callback`: see [here](#page-callback)
+        - `callback`: if callback returns `true`, the API will continue requesting the next page
         - `id`: user id, or token's user id by default
-        - `restrict`: see [here](#page-callback)
+        - `restrict`: if callback returns `true`, the API will continue requesting the next page
     - Returns
         - nothing because the resut is processed in `callback`
     - Notes
