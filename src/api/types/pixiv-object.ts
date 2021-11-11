@@ -1,6 +1,6 @@
 import { User } from './user';
 
-enum Restrict{
+export enum Restrict{
     Public,
     MypixivOnly,
     Private,
