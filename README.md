@@ -43,21 +43,22 @@ let refreshToken = 'refresh token here';
     // do stuff with 'detail' see doc for more info
     let detail = await api.getUserDetail(pixivStaff);
 
+    // get public illustrations
     await api.getUserIllusts(page => {
         // this will request all pages
         // return false to stop requesting
         return true;
     }, pixivStaff);
 
+    // get your own public bookmarks
     await api.getUserBookmarks(page => {
-        // only look for private bookmarks for yourself
-        return true;
-    }, pixivStaff, 'public');
-
-    await api.getUserFollowing(page => {
-        // get public following for yourself
         return true;
     });
+
+    // get private following for yourself
+    await api.getUserFollowing(page => {
+        return true;
+    }, null, 'private');
     //#endregion user
 
     //#region illustration
