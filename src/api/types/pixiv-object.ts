@@ -1,5 +1,9 @@
 import { User } from './user';
 
+export { Token } from './token';
+export { UserDetail, IllustsPage, UsersPage } from './user';
+export { Illustration } from './illustration';
+
 export enum Restrict{
     Public,
     MypixivOnly,
@@ -17,7 +21,7 @@ export interface Artwork{
     restrict: Restrict
     x_restrict: boolean // true if r18
     create_date: string // iso
-    page_count:number
+    page_count: number
     tags: {
         name: string
         translated_name: string | null
