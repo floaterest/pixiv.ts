@@ -94,7 +94,7 @@ async getUserIllusts(callback: (page: IllustsPage) => boolean, id: number = this
 ## User Bookmarks
 [Back to top](#table-of-contents)
 ```ts
-async getUserBookmarks(callback: (page: IllustsPage) => boolean, id: number = this.uid, restrict: Restrict = 'public')
+async getUserBookmarks(callback: (page: IllustsPage) => boolean, id: number = this.uid, restrict: 'public' | 'private' = 'public')
 ```
 - GET `/v1/user/bookmarks/illust`
     - Parameters
@@ -107,13 +107,13 @@ async getUserBookmarks(callback: (page: IllustsPage) => boolean, id: number = th
 ## User Following
 [Back to top](#table-of-contents)
 ```ts
-async getUserFollowing(callback: callback: (page: UsersPage) => boolean, id: number = this.uid, restrict: Restrict = 'public')
+async getUserFollowing(callback: callback: (page: UsersPage) => boolean, id: number = this.uid, restrict: 'public' | 'private' = 'public')
 ```
 - GET `/v1/user/following`
     - Parameters
         - `callback`: if callback returns `true`, the API will continue requesting the next page
         - `id`: user id, or token's user id by default
-        - `restrict`: if callback returns `true`, the API will continue requesting the next page
+        - `restrict`: public or private
     - Returns
         - nothing because the resut is processed in `callback`
     - Notes
@@ -137,24 +137,24 @@ async getIllustDetail(id: number): Promise<Illustration>
 ## Add Bookmark
 [Back to top](#table-of-contents)
 ```ts
-async addBookmark(id: number, restrict: Restrict = 'public')
+async addBookmark(id: number, restrict: 'public' | 'private' = 'public')
 ```
 - POST `/v2/illust/bookmark/add`
     - Parameters
         - `id`: illustration id
-        - `restrict`: see [here](#restrict)
+        - `restrict`: public or private
     - Returns
         - a promised absolutely nothing
 
 ## Delete Bookmark
 [Back to top](#table-of-contents)
 ```ts
-async deleteBookmark(id: number, restrict: Restrict = 'public')
+async deleteBookmark(id: number, restrict: 'public' | 'private' = 'public')
 ```
 - POST `v1/illust/bookmark/delete`
     - Parameters
         - `id`: illustration id
-        - `restrict`: see [here](#restrict)
+        - `restrict`: public or private
     - Returns
         - a promised void
 
