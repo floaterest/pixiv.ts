@@ -1,13 +1,13 @@
 import { URL } from 'url';
 import querystring from 'querystring';
 import https, { RequestOptions } from 'https';
+import fs from 'fs';
+import path from 'path';
 
 import { md5 } from './md5';
 import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './constants';
 import { HttpClient, Dict } from './client';
 import { PixivPage, Token, UserDetail, IllustsPage, UsersPage, Illustration } from './types/pixiv-object';
-import fs from 'fs';
-import path from 'path';
 
 
 export class PixivApi extends HttpClient{
