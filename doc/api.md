@@ -94,11 +94,12 @@ async getUserIllusts(callback: (page: IllustsPage) => boolean, id: number = this
 ## User Bookmarks
 [Back to top](#table-of-contents)
 ```ts
-async getUserBookmarks(callback: (page: IllustsPage) => boolean, id: number = this.uid, restrict: 'public' | 'private' = 'public')
+async getUserBookmarks(callback: (page: IllustsPage) => boolean, id: number | null = null, restrict: 'public' | 'private' = 'public')
 ```
 - GET `/v1/user/bookmarks/illust`
     - Parameters
         - `callback`: if callback returns `true`, the API will continue requesting the next page
+        - `id`: user id, pass `null` to use your own user id
         - `restrict`: public or private (don't request other people's private bookmarks)
     - Returns
         - nothing because the result is processed in `callback`
@@ -107,12 +108,12 @@ async getUserBookmarks(callback: (page: IllustsPage) => boolean, id: number = th
 ## User Following
 [Back to top](#table-of-contents)
 ```ts
-async getUserFollowing(callback: callback: (page: UsersPage) => boolean, id: number = this.uid, restrict: 'public' | 'private' = 'public')
+async getUserFollowing(callback: callback: (page: UsersPage) => boolean, id: number | null = null, restrict: 'public' | 'private' = 'public')
 ```
 - GET `/v1/user/following`
     - Parameters
         - `callback`: if callback returns `true`, the API will continue requesting the next page
-        - `id`: user id, or token's user id by default
+        - `id`: user id, pass `null` to use your own user id
         - `restrict`: public or private
     - Returns
         - nothing because the resut is processed in `callback`
