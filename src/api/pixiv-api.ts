@@ -137,22 +137,22 @@ export class PixivApi extends HttpClient{
 
     async getUserBookmarks(
         callback: (page: IllustsPage) => boolean,
-        id: number = this.uid,
+        id: number | null = null,
         restrict: 'public' | 'private' = 'public',
     ){
         await this.getPage<IllustsPage>('/v1/user/bookmarks/illust', {
-            'user_id': id,
+            'user_id': id ?? this.uid,
             'restrict': restrict,
         }, callback);
     }
 
     async getUserFollowing(
         callback: (page: UsersPage) => boolean,
-        id: number = this.uid,
+        id: number | null = null,
         restrict: 'public' | 'private' = 'public',
     ){
         await this.getPage<UsersPage>('/v1/user/following', {
-            'user_id': id,
+            'user_id': id ?? this.uid,
             'restrict': restrict,
         }, callback);
     }
