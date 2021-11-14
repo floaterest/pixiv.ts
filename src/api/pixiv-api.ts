@@ -9,6 +9,7 @@ import { CLIENT_ID, CLIENT_SECRET, HASH_SECRET, AUTH_HOST, HOST } from './consta
 import { HttpClient, Dict } from './client';
 import { PixivPage, Token, UserDetail, IllustsPage, UsersPage, Illustration } from './types/pixiv-object';
 
+export { Restrict } from './types/pixiv-object';
 
 export class PixivApi extends HttpClient{
     token: Token;

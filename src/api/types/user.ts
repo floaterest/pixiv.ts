@@ -1,5 +1,4 @@
-import { PixivPage } from './pixiv-object';
-import { Illustration } from './illustration';
+import { PixivPage, Illustration } from './pixiv-object';
 
 export interface User{
     id: number
