@@ -108,7 +108,7 @@ async getUserBookmarks(callback: (page: IllustsPage) => boolean, id: number | nu
 ## User Following
 [Back to top](#table-of-contents)
 ```ts
-async getUserFollowing(callback: callback: (page: UsersPage) => boolean, id: number | null = null, restrict: 'public' | 'private' = 'public')
+async getUserFollowing(callback: (page: UsersPage) => boolean, id: number | null = null, restrict: 'public' | 'private' = 'public')
 ```
 - GET `/v1/user/following`
     - Parameters
