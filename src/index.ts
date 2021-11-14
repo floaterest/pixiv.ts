@@ -1,1 +1,1 @@
-export { PixivApi } from './api/pixiv-api';
+export { PixivApi, Restrict } from './api/pixiv-api';
