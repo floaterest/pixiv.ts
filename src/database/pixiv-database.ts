@@ -43,6 +43,7 @@ interface Illustration{
     // image_urls: included in meta_pages
     caption: string;
     restrict: Restrict;
+
     user: User;
     tags: Tag[];
     tools: string[];
@@ -62,6 +63,7 @@ interface Illustration{
      */
     x_restrict: boolean;
     series: object | null;
+
     /**
      * includes meta_single_page
      */
