@@ -35,12 +35,6 @@ export class BinaryReader{
         return this.read(4);
     }
 
-    readLongLong(): bigint{
-        let n = this.b.readBigInt64LE(this.i);
-        this.i += 8;
-        return n;
-    }
-
     str(): string{
         // read out an int32 7 bit at a time
         // the high bit of the byte, when on,
