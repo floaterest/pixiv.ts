@@ -90,6 +90,7 @@ let refreshToken = 'refresh token here';
   - user
     - add other artwork type to getUserBookmarks
     - add novels in UserPreview interface
+    - check of novel has page_count (for Artwork interface creation)
   - general
     - add "too many requests" handler support
     - add file downloader and filename formatter
