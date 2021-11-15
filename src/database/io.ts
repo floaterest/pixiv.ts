@@ -1,34 +1,34 @@
 export class BinaryReader{
-    b: Buffer;
-    i: number = 0;
+    buffer: Buffer;
+    index: number = 0;
 
     /**
      * read all numbers with LE
      */
     constructor(buffer: Buffer){
-        this.b = buffer;
+        this.buffer = buffer;
     }
 
     private read(length: number): number{
-        let n = this.b.readIntLE(this.i, length);
-        this.i += length;
+        let n = this.buffer.readIntLE(this.index, length);
+        this.index += length;
         return n;
     }
 
-    private readBytes(length: number): Buffer{
-        let buf = this.b.slice(this.i, length);
-        this.i += length;
+    private bytes(length: number): Buffer{
+        let buf = this.buffer.slice(this.index, length);
+        this.index += length;
         return buf;
     }
 
     //#region read
 
     byte(): number{
-        return this.b[this.i++];
+        return this.buffer[this.index++];
     }
 
     bool(): boolean{
-        return !!this.b[this.i++];
+        return !!this.buffer[this.index++];
     }
 
     int(): number{
@@ -47,7 +47,7 @@ export class BinaryReader{
             shift += 7;
             length |= (b & 0x7f) << shift;
         }
-        return this.readBytes(length).toString('utf8');
+        return this.bytes(length).toString('utf8');
     }
 
     //#endregion read
