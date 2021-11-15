@@ -23,15 +23,15 @@ export class BinaryReader{
 
     //#region read
 
-    readByte(): number{
+    byte(): number{
         return this.b[this.i++];
     }
 
-    readBool(): boolean{
+    bool(): boolean{
         return !!this.b[this.i++];
     }
 
-    readInt(): number{
+    int(): number{
         return this.read(4);
     }
 
@@ -41,15 +41,15 @@ export class BinaryReader{
         return n;
     }
 
-    readStr(): string{
+    str(): string{
         // read out an int32 7 bit at a time
         // the high bit of the byte, when on,
         // means to continue reading more bytes
-        let b = this.readByte();
+        let b = this.byte();
         let length = b & 0x7f;
         let shift = 0;
         while(b & 0x80){
-            b = this.readByte();
+            b = this.byte();
             shift += 7;
             length |= (b & 0x7f) << shift;
         }
