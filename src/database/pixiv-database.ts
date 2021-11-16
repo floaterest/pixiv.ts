@@ -82,9 +82,8 @@ export class PixivDatabase{
     lastModified!: number;
     username!: string;
     illustrations!: Illustration[];
-    //#endregion properties
 
-    private r!: BinaryReader;
+    //#endregion properties
 
     private constructor(){}
 
