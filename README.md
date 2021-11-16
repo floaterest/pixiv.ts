@@ -97,6 +97,8 @@ let refreshToken = 'refresh token here';
 - PixivDatabase
   - add database structure
   - add read/write support
+  - method for convert from json (HTTP)
+  - method for convert from Buffer(65536)
 
 # Contribution
 [Back to top](#table-of-contents)
