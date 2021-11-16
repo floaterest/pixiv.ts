@@ -3,13 +3,13 @@ import fs from 'fs';
 import { BinaryReader } from './io';
 import { Restrict } from '../api/types/pixiv-object';
 
-enum IllustType{
+export enum IllustType{
     illust,
     manga,
     ugoira
 }
 
-interface User{
+export interface User{
     id: number
     name: string
     account: string
@@ -20,19 +20,19 @@ interface User{
     is_followed: boolean
 }
 
-interface Tag{
+export interface Tag{
     name: string,
     translated_name: string
 }
 
-interface MetaPage{
+export interface MetaPage{
     square_medium: string
     medium: string
     large: string
     original: string
 }
 
-interface Illustration{
+export interface Illustration{
     id: number;
     /**
      * date of the last successful HTTP request (when visible == True)
@@ -79,8 +79,8 @@ interface Illustration{
 export class PixivDatabase{
     //#region properties
     path!: string;
-    username!: string;
     lastModified!: number;
+    username!: string;
     illustrations!: Illustration[];
     //#endregion properties
 
