@@ -28,7 +28,7 @@ export class BinaryReader{
     }
 
     bool(): boolean{
-        return !!this.buffer[this.index++];
+        return !!this.byte();
     }
 
     int(): number{
