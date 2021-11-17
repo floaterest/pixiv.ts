@@ -4,9 +4,10 @@ An npm module for [Pixiv](https://www.pixiv.net/en/) written in TypeScript
 <!-- omit in toc -->
 
 # Table of Contents
+- [Table of Contents](#table-of-contents)
 - [Installation](#installation)
 - [Usage](#usage)
-	- [PixivApi](#pixivapi)
+  - [PixivApi](#pixivapi)
 - [Todo](#todo)
 - [Contribution](#contribution)
 
@@ -33,37 +34,51 @@ import { PixivApi } from 'pixiv-typed';
 
 let refreshToken = 'refresh token here';
 
-PixivApi.refresh(refreshToken).then(api => {
-	//#region user
-	let pixivStaff = 11;
+(async function(){
+    let api = await PixivApi.refresh(refreshToken);
+    //#region user
+    let pixivStaff = 11;
 
-	// api.getUserDetail() for yourself
-	api.getUserDetail(pixivStaff).then(detail => {
-		// do stuff with 'detail' see doc for more info
-	});
+    // api.getUserDetail() for yourself
+    // do stuff with 'detail' see doc for more info
+    let detail = await api.getUserDetail(pixivStaff);
 
-	api.getUserIllusts(page => {
-		// this will request all pages
-		// return false to stop requesting
-		return true;
-	}, pixivStaff).then();
+    // get public illustrations
+    await api.getUserIllusts(page => {
+        // this will request all pages
+        // return false to stop requesting
+        return true;
+    }, pixivStaff);
 
-	api.getUserBookmarks(page => {
-		// only look for private bookmarks for yourself
-		return true;
-	}, pixivStaff, 'public').then();
+    // get your own public bookmarks
+    await api.getUserBookmarks(page => {
+        return true;
+    });
 
-	//#endregion user
+    // get private following for yourself
+    await api.getUserFollowing(page => {
+        return true;
+    }, null, 'private');
+    //#endregion user
 
-	//#region illustration
-	
-	let pixivAnniversary = 1580459;
-	api.getIllustDetail(pixivAnniversary).then(illust => {
-		// do stuff with 'illust'
-	});
-	//#endregion illustration
-});
+    //#region illustration
 
+    let pixivAnniversary = 1580459;
+    let illust = await api.getIllustDetail(pixivAnniversary);
+    // add public bookmark
+    await api.addBookmark(pixivAnniversary);
+    // delete private bookmark
+    await api.deleteBookmark(pixivAnniversary, 'private');
+    //#endregion illustration
+
+    // get original image url (this is frustrating I know)
+    let url = illust.page_count == 1
+        ? illust.meta_single_page.original_image_url!
+        : illust.meta_pages[0].image_urls.original!;
+    // download to 'anniversary' and do not throw error if overriding
+    // no need to login, image extension will be automatically added
+    await PixivApi.download(url,'anniversary',true);
+})();
 ```
 </details>
 
@@ -71,8 +86,19 @@ PixivApi.refresh(refreshToken).then(api => {
 
 # Todo
 [Back to top](#table-of-contents)
-- Finish PixivApi
-- Add PixivDatabase
+- PixivApi
+  - user
+    - add other artwork type to getUserBookmarks
+    - add novels in UserPreview interface
+    - check of novel has page_count (for Artwork interface creation)
+  - general
+    - add "too many requests" handler support
+    - add file downloader and filename formatter
+- PixivDatabase
+  - add database structure
+  - add read/write support
+  - method for convert from json (HTTP)
+  - method for convert from Buffer(65536)
 
 # Contribution
 [Back to top](#table-of-contents)

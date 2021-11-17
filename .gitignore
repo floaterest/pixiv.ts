@@ -1,6 +1,9 @@
 # JetBrains
 .idea
 
+# Test database
+*.db
+
 # Logs
 logs
 *.log
