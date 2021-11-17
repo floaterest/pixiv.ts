@@ -1,27 +1,13 @@
-# pixiv-typed <!-- omit in toc -->
-An npm module for [Pixiv](https://www.pixiv.net/en/) written in TypeScript
+# Pixiv.ts <!-- omit in toc -->
+An [Pixiv](https://www.pixiv.net/en/) API wrapper written in TypeScript
 
 <!-- omit in toc -->
 
 # Table of Contents
 - [Table of Contents](#table-of-contents)
-- [Installation](#installation)
 - [Usage](#usage)
   - [PixivApi](#pixivapi)
 - [Todo](#todo)
-- [Contribution](#contribution)
-
-# Installation
-[Back to top](#table-of-contents)
-
-To install, use
-```sh
-npm i pixiv-typed
-```
-To uninstall, use
-```sh
-npm r pixiv-typed
-```
 
 # Usage
 ## PixivApi
@@ -30,7 +16,7 @@ npm r pixiv-typed
 <summary><b>Code Example</b></summary>
 
 ```ts
-import { PixivApi } from 'pixiv-typed';
+import { PixivApi } from 'pixiv.ts';
 
 let refreshToken = 'refresh token here';
 
@@ -99,11 +85,3 @@ let refreshToken = 'refresh token here';
   - add read/write support
   - method for convert from json (HTTP)
   - method for convert from Buffer(65536)
-
-# Contribution
-[Back to top](#table-of-contents)
-1. Fork it [here](../../fork)
-2. Create your feature branch<br>```git checkout -b feature/foobar```
-3. Commit your changes<br>```git commit -am 'add foobar'```
-4. Push to the branch<br>```git push origin feature/foobar```
-5. Create a new Pull Request
