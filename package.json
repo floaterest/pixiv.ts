@@ -1,7 +1,7 @@
 {
-  "name": "pixiv-typed",
+  "name": "pixiv.ts",
   "version": "0.0.0",
-  "description": "Module for Pixiv with typings",
+  "description": "Pixiv with typings",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -9,11 +9,11 @@
     "build": "tsc",
     "prepublishOnly": "tsc"
   },
-  "author": "Floateresting",
+  "author": "Floaterest",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Floateresting/pixiv-typed"
+    "url": "https://github.com/Floaterest/pixiv.ts"
   },
   "devDependencies": {
     "ts-node": "^9.1.1",
